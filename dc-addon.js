@@ -361,6 +361,18 @@
       isoView(app);
     }));
 
+    var mapsInput = document.createElement('input');
+    mapsInput.type = 'file'; mapsInput.multiple = true; mapsInput.accept = 'image/*';
+    mapsInput.style.display = 'none';
+    mapsInput.onchange = function () {
+      if (mapsInput.files.length) dcApplyMaps(app, mapsInput.files);
+      mapsInput.value = '';
+    };
+    panel.appendChild(mapsInput);
+    panel.appendChild(btn('MAPS', 'bake PBR maps (albedo/rough/metal PNGs) onto the mesh as paint', function () {
+      mapsInput.click();
+    }));
+
     var rl = document.createElement('label');
     rl.title = 'reload result into a cleared scene (clears undo history)';
     rl.style.cssText = 'display:flex;align-items:center;gap:3px;color:#9ab;cursor:pointer;';
@@ -447,25 +459,135 @@
     return li;
   }
 
-  function injectAlphaControls() {
+  function injectAlphaControls(app) {
+    // yagui.css caps open folders at max-height:700px with overflow:hidden;
+    // our injected rows push the Sculpting folder past it and the tail gets
+    // clipped unreachable. Raise the ceiling (sidebar itself scrolls, and
+    // 2000px keeps the open/close max-height transition animating).
+    if (!document.getElementById('dc-css-fix')) {
+      var st = document.createElement('style');
+      st.id = 'dc-css-fix';
+      st.textContent = '.gui-sidebar > ul[opened=true]{max-height:2000px !important;}';
+      document.head.appendChild(st);
+    }
     // idempotent: clear previous injections (e.g. GUI rebuilt on language change)
     dcSyncFns.length = 0;
     var old = document.querySelectorAll('.dc-alpha-row');
     for (var i = 0; i < old.length; ++i) old[i].parentNode.removeChild(old[i]);
-    var titles = document.querySelectorAll('.gui-sidebar .group-title');
-    var injected = 0;
-    for (i = 0; i < titles.length; ++i) {
-      if (titles[i].textContent.trim() !== 'Alpha') continue;
-      var anchor = titles[i];
-      var rows = [dcSliderRow('Alpha Radius', 0.25, 4, 'scale'),
-                  dcSliderRow('Alpha Intensity', 0, 2, 'intensity'),
-                  dcTileRow()];
-      for (var r = rows.length - 1; r >= 0; --r)
-        anchor.parentNode.insertBefore(rows[r], anchor.nextSibling);
-      injected++;
+    // ONE set of rows, docked in the Common section (exists once, shows for
+    // every tool). Per-Alpha-section injection duplicated visibly because
+    // stock rows hide/show via a per-tool registry ours can't join.
+    // Anchor: GuiSculpting._ctrlTitleCommon (bundle-verified, locale-proof).
+    var gui = app.getGui();
+    var anchor = null;
+    for (var k in gui) {
+      var o = gui[k];
+      if (o && typeof o === 'object' && o._ctrlSculpt && o._ctrlTitleCommon) {
+        anchor = o._ctrlTitleCommon.domText;
+        break;
+      }
     }
-    if (!injected) console.warn('[DC] no Alpha section found to inject into');
-    return injected;
+    if (!anchor) { console.warn('[DC] Common title not found'); return 0; }
+    var rows = [dcSliderRow('Alpha Radius', 0.25, 4, 'scale'),
+                dcSliderRow('Alpha Intensity', 0, 2, 'intensity'),
+                dcTileRow()];
+    for (var r = rows.length - 1; r >= 0; --r)
+      anchor.parentNode.insertBefore(rows[r], anchor.nextSibling);
+    return 1;
+  }
+
+  /* ============ MAPS: bake PBR textures onto vertex data (v3.7) =======
+   * SculptGL paints VERTEX colors, so "see my maps and paint over them"
+   * means sampling each map at every vertex's UV and writing the result
+   * into the vertex color / material arrays. OBJ UVs survive import
+   * (importer parses vt + per-corner indices — bundle-verified); commit
+   * chain is the paint tool's own: updateDuplicateColorsAndMaterials ->
+   * updateDrawArrays -> render. Materials = [roughness, metalness, mask].
+   * Resolution = mesh density: subdivide first for finer detail.
+   * ================================================================== */
+  function dcClassifyMap(name) {
+    if (/rough/i.test(name)) return 'rough';
+    if (/metal/i.test(name)) return 'metal';
+    if (/albedo|diffuse|base|color|colour/i.test(name)) return 'albedo';
+    return null;
+  }
+
+  function dcImageData(file) {
+    return createImageBitmap(file).then(function (bmp) {
+      var c = document.createElement('canvas');
+      c.width = bmp.width; c.height = bmp.height;
+      var ctx = c.getContext('2d');
+      ctx.drawImage(bmp, 0, 0);
+      return ctx.getImageData(0, 0, bmp.width, bmp.height);
+    });
+  }
+
+  function dcSampleUV(img, u, v) {
+    if (u < 0 || u > 1) u = u - Math.floor(u);           // wrap tiled UVs,
+    if (v < 0 || v > 1) v = v - Math.floor(v);           // but keep exact 1.0
+    var x = Math.min(img.width - 1, Math.round(u * (img.width - 1)));
+    var y = Math.min(img.height - 1, Math.round((1 - v) * (img.height - 1)));
+    return 4 * (y * img.width + x);                       // index into .data
+  }
+
+  function dcApplyMaps(app, fileList) {
+    var mesh = app.getMesh();
+    if (!mesh) { forgeStatus('no mesh selected', '#c66'); return; }
+    if (!mesh.hasUV || !mesh.hasUV()) {
+      forgeStatus('mesh has no UVs — import an OBJ that has them', '#c66');
+      return;
+    }
+    var tc = mesh.getTexCoords();
+    var nv = mesh.getNbVertices();
+    if (!tc || tc.length < nv * 2) {
+      forgeStatus('UV data shorter than vertex count — cannot sample', '#c66');
+      return;
+    }
+    var jobs = [], names = { albedo: null, rough: null, metal: null };
+    for (var i = 0; i < fileList.length; ++i) {
+      var kind = dcClassifyMap(fileList[i].name);
+      if (!kind && fileList.length === 1) kind = 'albedo';  // lone file = albedo
+      if (kind && !names[kind]) {
+        names[kind] = fileList[i].name;
+        (function (k, f) {
+          jobs.push(dcImageData(f).then(function (d) { return { kind: k, img: d }; }));
+        })(kind, fileList[i]);
+      }
+    }
+    if (!jobs.length) {
+      forgeStatus('no usable maps (name them albedo/rough/metal)', '#c66');
+      return;
+    }
+    forgeStatus('baking maps onto vertices…', '#4BAFD1');
+    Promise.all(jobs).then(function (maps) {
+      var colors = mesh.getColors();
+      var mats = mesh.getMaterials();
+      var applied = [];
+      maps.forEach(function (m) {
+        var d = m.img.data;
+        for (var i = 0; i < nv; ++i) {
+          var p = dcSampleUV(m.img, tc[2 * i], tc[2 * i + 1]);
+          if (m.kind === 'albedo') {
+            colors[3 * i]     = d[p] / 255;
+            colors[3 * i + 1] = d[p + 1] / 255;
+            colors[3 * i + 2] = d[p + 2] / 255;
+          } else if (m.kind === 'rough') {
+            mats[3 * i] = d[p] / 255;
+          } else {
+            mats[3 * i + 1] = d[p] / 255;
+          }
+        }
+        applied.push(m.kind);
+      });
+      mesh.updateDuplicateColorsAndMaterials();
+      mesh.updateDrawArrays();
+      app.render();
+      forgeStatus('baked: ' + applied.join(' + ') + ' → vertex data', '#6c6');
+      console.log('[DC] maps baked onto ' + nv + ' verts:', names);
+    }).catch(function (e) {
+      console.warn('[DC] maps:', e);
+      forgeStatus('map bake failed — see console', '#c66');
+    });
   }
 
   /* ---- draggable panels, positions persisted ------------------------- */
@@ -545,10 +667,27 @@
     forgeStatus('ISO 35.264\u00B0 ortho', '#4BAFD1');
   }
 
+  // Switch tools through the GUI's own combobox (_ctrlSculpt.setValue) — the
+  // same path the stock hotkeys use — so the Radius/Intensity sliders rebind
+  // to the new tool and the sidebar re-highlights. Direct setToolIndex left
+  // the sliders bound to the previous tool (the "brush size won't change" bug).
+  function dcSetTool(app, idx) {
+    var gui = app.getGui();
+    for (var k in gui) {
+      var o = gui[k];
+      if (o && typeof o === 'object' && o._ctrlSculpt && o._ctrlSculpt.setValue) {
+        o._ctrlSculpt.setValue(idx);
+        return true;
+      }
+    }
+    app.getSculptManager().setToolIndex(idx);    // fallback, shouldn't happen
+    app.render();
+    return false;
+  }
+
   function dcArmMark(app) {
-    var sm = app.getSculptManager();
-    sm.setToolIndex(TOOL_PAINT);                 // GUI sidebar won't re-highlight
-    var tool = sm.getTool(TOOL_PAINT);
+    dcSetTool(app, TOOL_PAINT);
+    var tool = app.getSculptManager().getTool(TOOL_PAINT);
     tool._color[0] = CYAN[0]; tool._color[1] = CYAN[1]; tool._color[2] = CYAN[2];
     forgeStatus('MARK armed — paint joints cyan', '#4BAFD1');
   }
@@ -562,10 +701,8 @@
       switch (e.which) {
         case 77: dcArmMark(app); e.handled = true; break;                 // M
         case 79: isoView(app); e.handled = true; break;                   // O
-        case 65: app.getSculptManager().setToolIndex(10); app.render();
-                 e.handled = true; break;                                 // A masking
-        case 81: app.getSculptManager().setToolIndex(11); app.render();
-                 e.handled = true; break;                                 // Q local scale
+        case 65: dcSetTool(app, 10); e.handled = true; break;             // A masking
+        case 81: dcSetTool(app, 11); e.handled = true; break;             // Q local scale
       }
     }, false);
   }
@@ -583,7 +720,7 @@
       installSampler(app.getPickingSymmetry());
       var pal = buildPalettePanel(app);
       buildForgePanel(app);
-      var alphaSections = injectAlphaControls();
+      var alphaSections = injectAlphaControls(app);
       fixDeleteSelection(app);
       installHotkeys(app);
       if (pal) makeDraggable(pal, pal.firstChild, 'dc-pos-palette');
@@ -592,8 +729,8 @@
       console.log('[DC] hotkeys: M mark, O iso, A masking, Q localscale ' +
                   '(stock: 1-9/0 tools, E transform, X/C radius/intensity, ' +
                   'N negative, S picker, Del delete, F/T/L views, Space reset)');
-      console.log('[DC] alpha controls injected into ' + alphaSections + ' Alpha section(s)');
-      console.log('[DC] addon v3.3 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
+      console.log('[DC] alpha controls docked in Common (' + alphaSections + ')');
+      console.log('[DC] addon v3.7 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
                   PALETTE.length + ' swatches, forge panel up');
     } catch (e) {
       console.error('[DC] addon failed:', e);
