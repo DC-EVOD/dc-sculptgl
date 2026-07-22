@@ -224,16 +224,29 @@
   }
 
   // PRIMARY path on this machine: package the job for the Claude forge.
-  // Mesh PLY + a job manifest download; drop BOTH into a Claude chat and
-  // say "run it" — the processed PLY comes back, load it via File > Add.
+  // Mesh gzips in-browser (CompressionStream) so it survives a weak link;
+  // with Chrome's download folder set to <repo>/jobs, the job lands in the
+  // repo — run ./push-job.sh, tell Claude "pushed", Claude pulls it from
+  // the repo, runs the engine, hands the result back.
   function packageJob(op, params, plyBuf) {
     var stamp = new Date().toISOString().replace(/[:.]/g, '-');
-    downloadBlob(new Blob([plyBuf]), 'dc_' + op + '_' + stamp + '.ply');
-    downloadBlob(new Blob([JSON.stringify({
-      op: op, params: params, file: 'dc_' + op + '_' + stamp + '.ply',
-      note: 'DC FORGE JOB - upload this manifest + the .ply to Claude and say: run it'
-    }, null, 2)], { type: 'application/json' }), 'dc_' + op + '_' + stamp + '.json');
-    forgeStatus('job saved — send both files to Claude', '#4BAFD1');
+    var base = 'dc_' + op + '_' + stamp;
+    function finish(blob, name) {
+      downloadBlob(blob, name);
+      downloadBlob(new Blob([JSON.stringify({
+        op: op, params: params, file: name,
+        note: 'DC FORGE JOB - push jobs/ to the repo (./push-job.sh), then tell Claude: pushed'
+      }, null, 2)], { type: 'application/json' }), base + '.json');
+      forgeStatus('job saved — push jobs/, ping Claude', '#4BAFD1');
+    }
+    if (typeof CompressionStream !== 'undefined') {
+      var stream = new Blob([plyBuf]).stream().pipeThrough(new CompressionStream('gzip'));
+      new Response(stream).blob().then(function (gz) {
+        finish(gz, base + '.ply.gz');
+      }).catch(function () { finish(new Blob([plyBuf]), base + '.ply'); });
+    } else {
+      finish(new Blob([plyBuf]), base + '.ply');
+    }
   }
 
   function forgeSend(app, op, params) {
@@ -288,10 +301,16 @@
     tag.style.cssText = 'color:#8F69E9;letter-spacing:1px;';
     panel.appendChild(tag);
 
+    var pollFails = 0, pollTick = 0;
     function poll() {
+      pollTick++;
+      if (pollFails >= 3 && pollTick % 12 !== 0) return;  // back off: spam-free console
       fetch(DAEMON + '/health').then(function (r) { return r.json(); })
-        .then(function (j) { dot.style.background = j.ok ? '#4BAFD1' : '#c96'; })
-        .catch(function () { dot.style.background = '#666'; });
+        .then(function (j) {
+          pollFails = 0;
+          dot.style.background = j.ok ? '#4BAFD1' : '#c96';
+        })
+        .catch(function () { pollFails++; dot.style.background = '#666'; });
     }
     poll(); setInterval(poll, 5000);
 
@@ -574,7 +593,7 @@
                   '(stock: 1-9/0 tools, E transform, X/C radius/intensity, ' +
                   'N negative, S picker, Del delete, F/T/L views, Space reset)');
       console.log('[DC] alpha controls injected into ' + alphaSections + ' Alpha section(s)');
-      console.log('[DC] addon v3.2 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
+      console.log('[DC] addon v3.3 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
                   PALETTE.length + ' swatches, forge panel up');
     } catch (e) {
       console.error('[DC] addon failed:', e);
