@@ -116,34 +116,7 @@
       panel.appendChild(sw);
     });
     document.body.appendChild(panel);
-
-    function slider(label, min, max, val, oninput) {
-      var wrap = document.createElement('label');
-      wrap.style.cssText = 'display:flex;align-items:center;gap:4px;color:#9ab;';
-      wrap.textContent = label;
-      var s = document.createElement('input');
-      s.type = 'range'; s.min = min; s.max = max; s.step = 0.05; s.value = val;
-      s.style.width = '64px';
-      var out = document.createElement('span');
-      out.textContent = Number(val).toFixed(2);
-      out.style.cssText = 'width:30px;color:#cbd;';
-      s.oninput = function () { out.textContent = Number(s.value).toFixed(2); oninput(parseFloat(s.value)); };
-      wrap.appendChild(s); wrap.appendChild(out);
-      return wrap;
-    }
-    var row2 = document.createElement('div');
-    row2.style.cssText = 'display:flex;gap:8px;align-items:center;margin-left:6px;' +
-      'padding-left:8px;border-left:1px solid #333;';
-    row2.appendChild(slider('A-Scl', 0.25, 4, 1, function (v) { dcAlpha.scale = v; }));
-    row2.appendChild(slider('A-Int', 0, 2, 1, function (v) { dcAlpha.intensity = v; }));
-    var tl = document.createElement('label');
-    tl.style.cssText = 'display:flex;align-items:center;gap:3px;color:#9ab;cursor:pointer;';
-    var cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.onchange = function () { dcAlpha.tile = cb.checked; };
-    tl.appendChild(cb); tl.appendChild(document.createTextNode('TILE'));
-    row2.appendChild(tl);
-    panel.appendChild(row2);
+    return panel;
   }
 
   /* ================= FORGE PANEL (v3) =================================
@@ -362,12 +335,11 @@
     }));
     panel.appendChild(resSel);
 
-    panel.appendChild(btn('MARK', 'RETOPO MARK — paint tool, exact cyan', function () {
-      var sm = app.getSculptManager();
-      sm.setToolIndex(TOOL_PAINT);            // GUI sidebar won't re-highlight
-      var tool = sm.getTool(TOOL_PAINT);
-      tool._color[0] = CYAN[0]; tool._color[1] = CYAN[1]; tool._color[2] = CYAN[2];
-      forgeStatus('MARK armed — paint joints cyan', '#4BAFD1');
+    panel.appendChild(btn('MARK', 'RETOPO MARK — paint tool, exact cyan (M)', function () {
+      dcArmMark(app);
+    }));
+    panel.appendChild(btn('ISO', 'orthographic 35.264\u00B0 isometric view (O)', function () {
+      isoView(app);
     }));
 
     var rl = document.createElement('label');
@@ -388,6 +360,197 @@
     document.body.appendChild(panel);
   }
 
+  /* ============ SIDEBAR ALPHA CONTROLS (v3.2) =========================
+   * Injects Alpha Radius / Alpha Intensity / TILE into the sidebar's
+   * Alpha section, using yagui's own markup (read from the bundle):
+   * rows are <li>, label.gui-label-side, input.gui-input-number +
+   * div.gui-slider>div. Each alpha-capable tool builds its OWN Alpha
+   * section (div.group-title "Alpha"), so we inject into every one and
+   * keep all copies synced to the shared dcAlpha state.
+   * ================================================================== */
+  var dcSyncFns = [];
+
+  function dcSliderRow(label, min, max, key) {
+    var li = document.createElement('li');
+    li.className = 'dc-alpha-row';
+    var lab = document.createElement('label');
+    lab.className = 'gui-label-side';
+    lab.innerHTML = label;
+    var num = document.createElement('input');
+    num.className = 'gui-input-number';
+    num.type = 'number'; num.min = min; num.max = max; num.step = 0.05;
+    var track = document.createElement('div');
+    track.className = 'gui-slider';
+    var fill = document.createElement('div');
+    track.appendChild(fill);
+    function clamp(v) { return Math.min(max, Math.max(min, v)); }
+    function paint() {
+      var v = dcAlpha[key];
+      fill.style.width = ((v - min) / (max - min) * 100) + '%';
+      if (document.activeElement !== num) num.value = v.toFixed(2);
+    }
+    function setVal(v) {
+      dcAlpha[key] = clamp(v);
+      dcSyncFns.forEach(function (f) { f(); });
+    }
+    num.onchange = function () { setVal(parseFloat(num.value) || dcAlpha[key]); };
+    function fromEvent(e) {
+      var r = track.getBoundingClientRect();
+      setVal(min + (max - min) * Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)));
+    }
+    track.addEventListener('pointerdown', function (e) {
+      track.setPointerCapture(e.pointerId); fromEvent(e); e.preventDefault();
+    });
+    track.addEventListener('pointermove', function (e) {
+      if (e.buttons) fromEvent(e);
+    });
+    li.appendChild(lab); li.appendChild(num); li.appendChild(track);
+    dcSyncFns.push(paint); paint();
+    return li;
+  }
+
+  function dcTileRow() {
+    var li = document.createElement('li');
+    li.className = 'dc-alpha-row';
+    var lab = document.createElement('label');
+    lab.className = 'gui-label-side';
+    lab.innerHTML = 'Tile (mirror wrap)';
+    var cb = document.createElement('input');
+    cb.className = 'gui-input-checkbox';
+    cb.type = 'checkbox';
+    function paint() { cb.checked = dcAlpha.tile; }
+    cb.onchange = function () {
+      dcAlpha.tile = cb.checked;
+      dcSyncFns.forEach(function (f) { f(); });
+    };
+    li.appendChild(lab); li.appendChild(cb);
+    dcSyncFns.push(paint); paint();
+    return li;
+  }
+
+  function injectAlphaControls() {
+    // idempotent: clear previous injections (e.g. GUI rebuilt on language change)
+    dcSyncFns.length = 0;
+    var old = document.querySelectorAll('.dc-alpha-row');
+    for (var i = 0; i < old.length; ++i) old[i].parentNode.removeChild(old[i]);
+    var titles = document.querySelectorAll('.gui-sidebar .group-title');
+    var injected = 0;
+    for (i = 0; i < titles.length; ++i) {
+      if (titles[i].textContent.trim() !== 'Alpha') continue;
+      var anchor = titles[i];
+      var rows = [dcSliderRow('Alpha Radius', 0.25, 4, 'scale'),
+                  dcSliderRow('Alpha Intensity', 0, 2, 'intensity'),
+                  dcTileRow()];
+      for (var r = rows.length - 1; r >= 0; --r)
+        anchor.parentNode.insertBefore(rows[r], anchor.nextSibling);
+      injected++;
+    }
+    if (!injected) console.warn('[DC] no Alpha section found to inject into');
+    return injected;
+  }
+
+  /* ---- draggable panels, positions persisted ------------------------- */
+  function makeDraggable(panel, grip, storeKey) {
+    try {
+      var saved = localStorage.getItem(storeKey);
+      if (saved) {
+        var p = JSON.parse(saved);
+        panel.style.left = p.x + 'px'; panel.style.top = p.y + 'px';
+        panel.style.right = 'auto'; panel.style.bottom = 'auto';
+      }
+    } catch (e) {}
+    grip.style.cursor = 'move';
+    grip.style.touchAction = 'none';
+    grip.addEventListener('pointerdown', function (e) {
+      var r = panel.getBoundingClientRect();
+      var dx = e.clientX - r.left, dy = e.clientY - r.top;
+      grip.setPointerCapture(e.pointerId);
+      function move(ev) {
+        var x = Math.min(window.innerWidth - 40, Math.max(0, ev.clientX - dx));
+        var y = Math.min(window.innerHeight - 20, Math.max(0, ev.clientY - dy));
+        panel.style.left = x + 'px'; panel.style.top = y + 'px';
+        panel.style.right = 'auto'; panel.style.bottom = 'auto';
+      }
+      function up(ev) {
+        grip.removeEventListener('pointermove', move);
+        grip.removeEventListener('pointerup', up);
+        var rr = panel.getBoundingClientRect();
+        try { localStorage.setItem(storeKey, JSON.stringify({ x: rr.left, y: rr.top })); }
+        catch (err) {}
+      }
+      grip.addEventListener('pointermove', move);
+      grip.addEventListener('pointerup', up);
+      e.preventDefault();
+    });
+  }
+
+  /* ============ QOL PATCHES (v3.2) ====================================
+   * 1) DELETE FIX — upstream removeMeshes does splice(getIndexMesh(m),1);
+   *    getIndexMesh returns -1 on a miss and splice(-1,1) deletes the LAST
+   *    mesh in the scene: failed lookup silently kills the wrong object.
+   *    Patched with an index guard; deleteCurrentSelection also made to
+   *    work when a mesh is active but _selectMeshes is empty.
+   * 2) ISO VIEW — camera.setOrbit(atan(1/sqrt(2)), 45deg) + orthographic:
+   *    the true 35.264deg isometric, built with the camera's own preset
+   *    math (verified from the bundle; top-down is +rotX).
+   * 3) HOTKEYS — stock build already has: 1-9 tools, 0 Move, E Transform,
+   *    X radius, C intensity, N negative, S picker, Del delete,
+   *    F/T/L front/top/left, Space reset, W wireframe, R remesh.
+   *    Addon adds: M = RETOPO MARK, O = iso view, A = Masking,
+   *    Q = Local Scale (all verified unbound in the stock map).
+   * ================================================================== */
+  var ISO_PITCH = Math.atan(1 / Math.sqrt(2));   // 0.6154797 rad = 35.264deg
+
+  function fixDeleteSelection(app) {
+    app.removeMeshes = function (arr) {
+      for (var r = 0; r < arr.length; ++r) {
+        var i = this.getIndexMesh(arr[r]);
+        if (i >= 0) this._meshes.splice(i, 1);   // guard: no splice(-1) footgun
+      }
+    };
+    app.deleteCurrentSelection = function () {
+      if (!this._mesh) return;
+      if (!this._selectMeshes.length) this._selectMeshes.push(this._mesh);
+      this.removeMeshes(this._selectMeshes);
+      this._stateManager.pushStateRemove(this._selectMeshes.slice());
+      this._selectMeshes.length = 0;
+      this.setMesh(null);
+    };
+  }
+
+  function isoView(app) {
+    var cam = app.getCamera();
+    cam.setProjectionType(1);                    // Enums.Projection.ORTHOGRAPHIC
+    cam.setOrbit(ISO_PITCH, Math.PI / 4);
+    app.render();
+    forgeStatus('ISO 35.264\u00B0 ortho', '#4BAFD1');
+  }
+
+  function dcArmMark(app) {
+    var sm = app.getSculptManager();
+    sm.setToolIndex(TOOL_PAINT);                 // GUI sidebar won't re-highlight
+    var tool = sm.getTool(TOOL_PAINT);
+    tool._color[0] = CYAN[0]; tool._color[1] = CYAN[1]; tool._color[2] = CYAN[2];
+    forgeStatus('MARK armed — paint joints cyan', '#4BAFD1');
+  }
+
+  function installHotkeys(app) {
+    window.addEventListener('keydown', function (e) {
+      if (e.handled === true || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (app._focusGui) return;
+      var t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+      switch (e.which) {
+        case 77: dcArmMark(app); e.handled = true; break;                 // M
+        case 79: isoView(app); e.handled = true; break;                   // O
+        case 65: app.getSculptManager().setToolIndex(10); app.render();
+                 e.handled = true; break;                                 // A masking
+        case 81: app.getSculptManager().setToolIndex(11); app.render();
+                 e.handled = true; break;                                 // Q local scale
+      }
+    }, false);
+  }
+
   // postprocessGui fires inside app.start() after the GUI exists;
   // dcApp is assigned before start() in index.html, so it's ready here.
   var prev = window.postprocessGui;
@@ -399,9 +562,19 @@
       loadAlphas(app);
       installSampler(app.getPicking());
       installSampler(app.getPickingSymmetry());
-      buildPalettePanel(app);
+      var pal = buildPalettePanel(app);
       buildForgePanel(app);
-      console.log('[DC] addon v3 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
+      var alphaSections = injectAlphaControls();
+      fixDeleteSelection(app);
+      installHotkeys(app);
+      if (pal) makeDraggable(pal, pal.firstChild, 'dc-pos-palette');
+      var fp = document.getElementById('dc-forge');
+      if (fp) makeDraggable(fp, fp.children[1], 'dc-pos-forge');
+      console.log('[DC] hotkeys: M mark, O iso, A masking, Q localscale ' +
+                  '(stock: 1-9/0 tools, E transform, X/C radius/intensity, ' +
+                  'N negative, S picker, Del delete, F/T/L views, Space reset)');
+      console.log('[DC] alpha controls injected into ' + alphaSections + ' Alpha section(s)');
+      console.log('[DC] addon v3.2 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
                   PALETTE.length + ' swatches, forge panel up');
     } catch (e) {
       console.error('[DC] addon failed:', e);
