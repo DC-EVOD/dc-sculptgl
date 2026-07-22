@@ -591,6 +591,86 @@
     });
   }
 
+  /* ============ OBJECTS PANEL — scene outliner (v3.9) =================
+   * Stock SculptGL has no scene list; imported meshes stack invisibly
+   * (the "piled on and looks like shit" problem). This panel lists every
+   * mesh: click = select, eye = show/hide (mesh.setVisible, renderer-
+   * honored), x = delete (through the fixed delete path). Rebuilds when
+   * the scene composition or selection changes.
+   * ================================================================== */
+  function buildObjectsPanel(app) {
+    var panel = document.createElement('div');
+    panel.id = 'dc-objects';
+    panel.style.cssText =
+      'position:fixed;left:8px;top:120px;z-index:9999;min-width:150px;' +
+      'padding:6px 8px;background:rgba(11,10,16,.85);border:1px solid #8F69E9;' +
+      'border-radius:6px;font:11px sans-serif;color:#cbd;';
+    var tag = document.createElement('div');
+    tag.textContent = 'OBJECTS';
+    tag.style.cssText = 'color:#8F69E9;letter-spacing:1px;margin-bottom:4px;';
+    panel.appendChild(tag);
+    var list = document.createElement('div');
+    panel.appendChild(list);
+    document.body.appendChild(panel);
+
+    var lastSig = '';
+    function rebuild() {
+      var meshes = app.getMeshes();
+      var cur = app.getMesh();
+      var sig = meshes.map(function (m) {
+        return m.getID() + ':' + (m.isVisible() ? 1 : 0) + (m === cur ? '*' : '');
+      }).join(',');
+      if (sig === lastSig) return;
+      lastSig = sig;
+      list.innerHTML = '';
+      if (!meshes.length) {
+        var empty = document.createElement('div');
+        empty.textContent = '(scene empty)';
+        empty.style.color = '#667';
+        list.appendChild(empty);
+        return;
+      }
+      meshes.forEach(function (m) {
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:6px;padding:2px 3px;' +
+          'border-radius:3px;cursor:pointer;' +
+          (m === cur ? 'background:#2a2440;border:1px solid #4BAFD1;' : 'border:1px solid transparent;');
+        var eye = document.createElement('span');
+        eye.textContent = m.isVisible() ? '\u25C9' : '\u25CB';
+        eye.title = m.isVisible() ? 'hide' : 'show';
+        eye.style.cssText = 'cursor:pointer;color:' + (m.isVisible() ? '#4BAFD1' : '#555') + ';';
+        eye.onclick = function (ev) {
+          ev.stopPropagation();
+          m.setVisible(!m.isVisible());
+          app.render(); lastSig = ''; rebuild();
+        };
+        var label = document.createElement('span');
+        var nv = m.getNbVertices();
+        label.textContent = 'Mesh ' + m.getID() + ' \u00B7 ' +
+          (nv > 999 ? (nv / 1000).toFixed(1) + 'k' : nv) + 'v';
+        label.style.flex = '1';
+        var del = document.createElement('span');
+        del.textContent = '\u2715';
+        del.title = 'delete this mesh';
+        del.style.cssText = 'cursor:pointer;color:#c66;padding:0 2px;';
+        del.onclick = function (ev) {
+          ev.stopPropagation();
+          app.setMesh(m);
+          app.deleteCurrentSelection();
+          app.render(); lastSig = ''; rebuild();
+        };
+        row.onclick = function () {
+          app.setMesh(m); app.render(); lastSig = ''; rebuild();
+        };
+        row.appendChild(eye); row.appendChild(label); row.appendChild(del);
+        list.appendChild(row);
+      });
+    }
+    rebuild();
+    setInterval(rebuild, 1500);
+    return panel;
+  }
+
   /* ---- draggable panels, positions persisted ------------------------- */
   function makeDraggable(panel, grip, storeKey) {
     try {
@@ -734,11 +814,13 @@
       if (pal) makeDraggable(pal, pal.firstChild, 'dc-pos-palette');
       var fp = document.getElementById('dc-forge');
       if (fp) makeDraggable(fp, fp.children[1], 'dc-pos-forge');
+      var op = buildObjectsPanel(app);
+      makeDraggable(op, op.firstChild, 'dc-pos-objects');
       console.log('[DC] hotkeys: M mark, O iso, A masking, Q localscale ' +
                   '(stock: 1-9/0 tools, E transform, X/C radius/intensity, ' +
                   'N negative, S picker, Del delete, F/T/L views, Space reset)');
       console.log('[DC] alpha controls docked in Common (' + alphaSections + ')');
-      console.log('[DC] addon v3.8 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
+      console.log('[DC] addon v3.9 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
                   PALETTE.length + ' swatches, forge panel up');
     } catch (e) {
       console.error('[DC] addon failed:', e);
