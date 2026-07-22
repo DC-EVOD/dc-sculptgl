@@ -19,3 +19,7 @@ Colab session). Point the addon at it with:
   localStorage.setItem('dc-forge-daemon', 'https://your-forge-url')
 in the browser console, then reload. Until then the dot stays grey —
 that's honest, not broken.
+
+HOTKEYS (v3.2): stock — 1-9/0 tools, E transform, X radius, C intensity,
+N negative, S picker, Del delete, F/T/L views, Space reset, W wireframe.
+Addon — M retopo mark, O iso 35.264deg ortho view, A masking, Q local scale.
