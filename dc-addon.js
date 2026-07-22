@@ -582,6 +582,16 @@
       mesh.updateDuplicateColorsAndMaterials();
       mesh.updateDrawArrays();
       mesh.setShaderType(0);   // PBR — matcap ignores vertex color and hides the bake
+      // stock PBR lookdev is murky: if exposure is still at the factory
+      // default (1), lift it — but never stomp a value the user has set
+      var gui = app.getGui();
+      for (var gk in gui) {
+        var go = gui[gk];
+        if (go && typeof go === 'object' && go._ctrlExposure && go._ctrlExposure.setValue) {
+          if (Math.abs(go._ctrlExposure.getValue() - 1) < 0.01) go._ctrlExposure.setValue(2.2);
+          break;
+        }
+      }
       app.render();
       forgeStatus('baked: ' + applied.join(' + ') + ' → vertex data (PBR on)', '#6c6');
       console.log('[DC] maps baked onto ' + nv + ' verts:', names);
@@ -669,6 +679,41 @@
     rebuild();
     setInterval(rebuild, 1500);
     return panel;
+  }
+
+  /* ============ DC WORLD — lookdev defaults (v3.10) ===================
+   * Stock SculptGL lookdev was always the weak wall: exposure 1, the dim
+   * "Mpumalanga veld" env, curvature 20, filmic off. This pass resets the
+   * world through the Rendering panel's OWN controls (GUI stays synced)
+   * and only touches knobs still at FACTORY values — one manual tweak by
+   * the user and that knob is theirs forever.
+   *   exposure 1 -> 2.2 | env 0 -> 2 (Studio small 01)
+   *   curvature 20 -> 50 (the cavity-depth read) | filmic on
+   * ================================================================== */
+  function applyWorldDefaults(app) {
+    var gui = app.getGui();
+    var gr = null;
+    for (var k in gui) {
+      var o = gui[k];
+      if (o && typeof o === 'object' && o._ctrlExposure) { gr = o; break; }
+    }
+    if (!gr) { console.warn('[DC] rendering gui not found — world defaults skipped'); return; }
+    var touched = [];
+    try {
+      if (gr._ctrlExposure && Math.abs(gr._ctrlExposure.getValue() - 1) < 0.01) {
+        gr._ctrlExposure.setValue(2.2); touched.push('exposure 2.2');
+      }
+      if (gr._ctrlEnv && gr._ctrlEnv.getValue && parseInt(gr._ctrlEnv.getValue(), 10) === 0) {
+        gr._ctrlEnv.setValue(2); touched.push('env Studio');
+      }
+      if (gr._ctrlCurvature && Math.abs(gr._ctrlCurvature.getValue() - 20) < 0.01) {
+        gr._ctrlCurvature.setValue(50); touched.push('curvature 50');
+      }
+      if (gr._ctrlFilmic && gr._ctrlFilmic.getValue && !gr._ctrlFilmic.getValue()) {
+        gr._ctrlFilmic.setValue(true); touched.push('filmic');
+      }
+    } catch (e) { console.warn('[DC] world defaults partial:', e); }
+    if (touched.length) console.log('[DC] world set: ' + touched.join(', '));
   }
 
   /* ---- draggable panels, positions persisted ------------------------- */
@@ -816,11 +861,12 @@
       if (fp) makeDraggable(fp, fp.children[1], 'dc-pos-forge');
       var op = buildObjectsPanel(app);
       makeDraggable(op, op.firstChild, 'dc-pos-objects');
+      applyWorldDefaults(app);
       console.log('[DC] hotkeys: M mark, O iso, A masking, Q localscale ' +
                   '(stock: 1-9/0 tools, E transform, X/C radius/intensity, ' +
                   'N negative, S picker, Del delete, F/T/L views, Space reset)');
       console.log('[DC] alpha controls docked in Common (' + alphaSections + ')');
-      console.log('[DC] addon v3.9 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
+      console.log('[DC] addon v3.10 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
                   PALETTE.length + ' swatches, forge panel up');
     } catch (e) {
       console.error('[DC] addon failed:', e);
