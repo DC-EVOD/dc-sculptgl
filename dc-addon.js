@@ -343,19 +343,19 @@
     panel.appendChild(remeshSel);
 
     var ringsSel = sel(['2', '3', '4', '5'], '3');
-    panel.appendChild(btn('RINGS', 'cyan marks → edge rings', function () {
-      forgeSend(app, 'rings', { rings: ringsSel.value });
+    panel.appendChild(btn('RINGS', 'white LOOPS marks → edge rings', function () {
+      forgeSend(app, 'rings', { rings: ringsSel.value, mark: 'white' });
     }));
     panel.appendChild(ringsSel);
 
     var resSel = sel(['512', '1024', '2048'], '1024');
-    panel.appendChild(btn('BAKE', 'UV + albedo/AO → zip download', function () {
+    panel.appendChild(btn('EXPORT', 'UV unwrap + texture bake → zip (the Unity gate)', function () {
       forgeSend(app, 'bake', { res: resSel.value, ao: 1, name: 'dc_asset' });
     }));
     panel.appendChild(resSel);
 
-    panel.appendChild(btn('MARK', 'RETOPO MARK — paint tool, exact cyan (M)', function () {
-      dcArmMark(app);
+    panel.appendChild(btn('LOOPS', 'Edge Loops brush — paint joint bands white (M)', function () {
+      dcArmLoops(app);
     }));
     panel.appendChild(btn('ISO', 'orthographic 35.264\u00B0 isometric view (O)', function () {
       isoView(app);
@@ -581,8 +581,9 @@
       });
       mesh.updateDuplicateColorsAndMaterials();
       mesh.updateDrawArrays();
+      mesh.setShaderType(0);   // PBR — matcap ignores vertex color and hides the bake
       app.render();
-      forgeStatus('baked: ' + applied.join(' + ') + ' → vertex data', '#6c6');
+      forgeStatus('baked: ' + applied.join(' + ') + ' → vertex data (PBR on)', '#6c6');
       console.log('[DC] maps baked onto ' + nv + ' verts:', names);
     }).catch(function (e) {
       console.warn('[DC] maps:', e);
@@ -596,7 +597,11 @@
       var saved = localStorage.getItem(storeKey);
       if (saved) {
         var p = JSON.parse(saved);
-        panel.style.left = p.x + 'px'; panel.style.top = p.y + 'px';
+        // clamp restored position into the current viewport — a stale save
+        // from a different window size can park the panel off-screen
+        var x = Math.min(Math.max(0, p.x), Math.max(0, window.innerWidth - 60));
+        var y = Math.min(Math.max(0, p.y), Math.max(0, window.innerHeight - 30));
+        panel.style.left = x + 'px'; panel.style.top = y + 'px';
         panel.style.right = 'auto'; panel.style.bottom = 'auto';
       }
     } catch (e) {}
@@ -685,13 +690,16 @@
     return false;
   }
 
-  function dcArmMark(app) {
+  var LOOP_WHITE = [1.0, 1.0, 1.0];   // pure white: fixed point in the
+                                       // colorspace conversion that killed teal
+  function dcArmLoops(app) {
     dcSetTool(app, TOOL_PAINT);
     var tool = app.getSculptManager().getTool(TOOL_PAINT);
-    tool._color[0] = CYAN[0]; tool._color[1] = CYAN[1]; tool._color[2] = CYAN[2];
-    forgeStatus('MARK armed — paint joints cyan', '#4BAFD1');
+    tool._color[0] = LOOP_WHITE[0]; tool._color[1] = LOOP_WHITE[1]; tool._color[2] = LOOP_WHITE[2];
+    if ('_intensity' in tool) tool._intensity = 1.0;
+    forgeStatus('LOOPS brush — paint joint bands white', '#4BAFD1');
   }
-
+  var dcArmMark = dcArmLoops;  // hotkey M keeps working
   function installHotkeys(app) {
     window.addEventListener('keydown', function (e) {
       if (e.handled === true || e.ctrlKey || e.altKey || e.metaKey) return;
@@ -730,7 +738,7 @@
                   '(stock: 1-9/0 tools, E transform, X/C radius/intensity, ' +
                   'N negative, S picker, Del delete, F/T/L views, Space reset)');
       console.log('[DC] alpha controls docked in Common (' + alphaSections + ')');
-      console.log('[DC] addon v3.7 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
+      console.log('[DC] addon v3.8 active: ' + ALPHAS.length + ' alphas, sampler installed, ' +
                   PALETTE.length + ' swatches, forge panel up');
     } catch (e) {
       console.error('[DC] addon failed:', e);

@@ -17,7 +17,7 @@ import numpy as np
 
 def args():
     a = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
-    d = {"in": None, "out": None, "rings": 3,
+    d = {"in": None, "out": None, "rings": 3, "mark_mode": "cyan",
          "mark_r": 0.25, "mark_g": 0.75, "mark_b": 0.75}
     i = 0
     while i < len(a):
@@ -43,7 +43,15 @@ def main():
         for loop, c in zip(me.loops, ca.data):
             cols[loop.vertex_index] += c.color[:3]; cnt[loop.vertex_index] += 1
         cols /= np.maximum(cnt, 1)[:, None]
-    marked = (cols[:, 0] < A["mark_r"]) & (cols[:, 1] > A["mark_g"]) & (cols[:, 2] > A["mark_b"])
+    if A["mark_mode"] == "white":
+        # LOOPS brush: pure white marks. Thresholds are LINEAR-space (Blender
+        # imports byte colors as linear floats); 0.5 linear ~ sRGB 188, so
+        # partial stylus pressure still registers. White survives colorspace
+        # conversion (1.0 is a fixed point) where blended cyan collapsed.
+        t = min(A["mark_r"], 0.5)
+        marked = (cols[:, 0] > t) & (cols[:, 1] > t) & (cols[:, 2] > t)
+    else:
+        marked = (cols[:, 0] < A["mark_r"]) & (cols[:, 1] > A["mark_g"]) & (cols[:, 2] > A["mark_b"])
     midx = set(np.where(marked)[0].tolist())
     if not midx: raise SystemExit("no marked vertices found")
 
@@ -108,10 +116,17 @@ def main():
     ca2 = me.color_attributes[0]
     wiped = 0
     if ca2.domain == "POINT":
-        for d in ca2.data:
-            c = d.color
-            if c[0] < A["mark_r"] and c[1] > A["mark_g"] and c[2] > A["mark_b"]:
-                d.color = (0.5, 0.5, 0.5, 1.0); wiped += 1
+        if A["mark_mode"] == "white":
+            t = min(A["mark_r"], 0.5)
+            for d in ca2.data:
+                c = d.color
+                if c[0] > t and c[1] > t and c[2] > t:
+                    d.color = (0.5, 0.5, 0.5, 1.0); wiped += 1
+        else:
+            for d in ca2.data:
+                c = d.color
+                if c[0] < A["mark_r"] and c[1] > A["mark_g"] and c[2] > A["mark_b"]:
+                    d.color = (0.5, 0.5, 0.5, 1.0); wiped += 1
 
     bpy.ops.wm.ply_export(filepath=A["out"], export_selected_objects=False,
                           export_colors="SRGB", ascii_format=False)

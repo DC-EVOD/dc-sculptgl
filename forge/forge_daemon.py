@@ -131,7 +131,8 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(200, f.read(), 'application/octet-stream', receipt)
             elif ep == 'rings':
                 dst = os.path.join(tmp, 'out.ply')
-                a = ['--in', src, '--out', dst, '--rings', q.get('rings', '3')]
+                a = ['--in', src, '--out', dst, '--rings', q.get('rings', '3'),
+                     '--mark-mode', q.get('mark', 'cyan')]
                 receipt, _ = run_engine(ENGINES[ep], a)
                 with open(dst, 'rb') as f:
                     self._send(200, f.read(), 'application/octet-stream', receipt)
