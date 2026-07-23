@@ -228,6 +228,45 @@
   // with Chrome's download folder set to <repo>/jobs, the job lands in the
   // repo — run ./push-job.sh, tell Claude "pushed", Claude pulls it from
   // the repo, runs the engine, hands the result back.
+  // === DC FORGE — self-describing job spec (auto-inserted) ===
+  var DC_FORGE_INSTRUCTIONS = JSON.stringify({
+    dc_forge_job: "1.0",
+    read_this_first: "Self-describing. Do everything below in headless Blender WITHOUT asking the user to re-explain. User is on a 4GB Chromebook with unreliable uploads — do not make them re-send.",
+    mesh_format: {
+      container: "gzip (single .ply — chromebook upload-size workaround, NOT an archive)",
+      ply: "SculptGL binary_little_endian: vertex = x,y,z float + red,green,blue uchar; faces = quad list. NO UVs, NO maps — material baked to VERTEX COLOR before export.",
+      trailing_bytes: "SculptGL appends zero-padding after faces. Null-fill, not data — ignore."
+    },
+    environment: {
+      blender: "Install blender 4.0.2 via apt if absent (version parity). Verify bpy imports headless first.",
+      no_numpy_in_blender: "Blender python lacks numpy — parse/raster in pure python inside Blender, or use system python3 for the raster step.",
+      cycles_broken: "DO NOT bake with Cycles — silent all-black map. Use a BARYCENTRIC RASTERIZER."
+    },
+    pipeline: [
+      "1. Ungzip .ply. Parse SculptGL binary manually (xyz + rgb uchar; quad faces). Ignore trailing zero-padding.",
+      "2. MEASURE + report: verts, faces (confirm quads), bounds, tallest axis (must be Y), vertex-color unique count.",
+      "3. QUAD REMESH via QuadriFlow at params.target_faces (clean even quads, NOT subdivision). Confirm 100% quads.",
+      "4. TRANSFER vertex color: each new vertex = nearest source vertex color (KD-tree). Retains baked paint.",
+      "5. UV UNWRAP (Smart UV Project, angle_limit ~1.15, island_margin ~0.02) — own uvs, texture+density decoupled.",
+      "6. BAKE albedo: barycentric-rasterize vertex color through UVs into 2048 PNG. Dilate edges ~4px. VERIFY non-black (unique>1000, coverage>5%); if black, FAILED — say so, don't ship.",
+      "7. EXPORT: OBJ + UVs + normals + MTL, forward_axis Y up_axis Z (no axis flip). Gzip OBJ. Deliver OBJ.gz + albedo.png + preview."
+    ],
+    gotchas: [
+      "OBJ export default axis-conversion lays model on its back — force forward Y / up Z.",
+      "Cycles diffuse bake = all-black here — use rasterizer.",
+      "trimesh fails on SculptGL PLY (assumes tris; faces are quads) — parse manually.",
+      "Fewer verts = lower vertex-color res — that's why we give real UVs + albedo map."
+    ],
+    laws: [
+      "AUDITER: no fidelity claim without a real tool-call receipt this session.",
+      "Measure before claiming.",
+      "No substitution — real op only, never a guess dressed as the result.",
+      "Fail honestly over false success (black bake = FAILURE).",
+      "State whose implementation it is (Claude's, not the user's intake.py unless supplied)."
+    ],
+    return_to_user: "Deliver files; state ACTUAL METHOD / RESULT / VERIFIED / LIMITATIONS. User re-uploads into the fork."
+  }, null, 2);
+
   function packageJob(op, params, plyBuf) {
     var stamp = new Date().toISOString().replace(/[:.]/g, '-');
     var base = 'dc_' + op + '_' + stamp;
@@ -235,8 +274,10 @@
       downloadBlob(blob, name);
       downloadBlob(new Blob([JSON.stringify({
         op: op, params: params, file: name,
-        note: 'DC FORGE JOB - push jobs/ to the repo (./push-job.sh), then tell Claude: pushed'
+        spec: 'dc_forge_instructions.json',
+        note: 'DC FORGE JOB - push jobs/ to the repo (./push-job.sh), then tell Claude: pushed. READ dc_forge_instructions.json FIRST — full pipeline; run it cold.'
       }, null, 2)], { type: 'application/json' }), base + '.json');
+      downloadBlob(new Blob([DC_FORGE_INSTRUCTIONS], { type: 'application/json' }), 'dc_forge_instructions.json');
       forgeStatus('job saved — push jobs/, ping Claude', '#4BAFD1');
     }
     if (typeof CompressionStream !== 'undefined') {
