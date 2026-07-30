@@ -1,0 +1,19 @@
+{
+  "contract": {
+    "unit": "1 unit = 1 metre",
+    "up_axis": "+Y",
+    "forward_axis": "-Z",
+    "grid_module_m": 1.0,
+    "grid_subsnaps_m": [0.5, 0.25],
+    "iso_pitch_deg": 35.264,
+    "iso_yaw_deg": 45,
+    "mesh_format": "glb",
+    "mesh_fallback": "obj",
+    "texture_format": "png",
+    "texture_sizes": { "character": 1024, "hero_boss": 2048, "prop_tile": 512 },
+    "pbr_maps": ["albedo", "N", "ORM", "E?"],
+    "tile2d_px": [128, 64],
+    "tilemap_format": "tiled-tmx-or-json"
+  },
+  "assets": []
+}
