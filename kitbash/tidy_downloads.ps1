@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 <#
-  DC DOWNLOADS TIDY  v1.1
+  DC DOWNLOADS TIDY  v1.2
   Files the loose files at the root of Downloads into David's existing numbered
   category folders. Category list was READ from his disk on 2026-09-26, not invented.
   Routing rules corrected against a real dry run over 892 files the same day.
@@ -151,9 +151,22 @@ function Get-ZipDest($path, $name) {
   return ''
 }
 
+# --- validate before any mutation -------------------------------------------
+# Required by the scriptability-check protocol. Without this, a missing or
+# redirected Downloads path silently reports "0 loose files" and looks like success.
+if (-not (Test-Path -LiteralPath $Downloads)) {
+  Write-Host "ABORT: source folder does not exist: $Downloads" -ForegroundColor Red
+  Write-Host "Pass the real path with -Downloads if yours is redirected." -ForegroundColor Yellow
+  exit 1
+}
+$rootParent = Split-Path -Parent $ReportDir
+if (-not (Test-Path -LiteralPath $rootParent)) {
+  Write-Host "NOTE: creating report root $rootParent" -ForegroundColor Yellow
+}
+
 # --- build the plan ---------------------------------------------------------
 New-Item -ItemType Directory -Force -Path $ReportDir | Out-Null
-Write-Host "`nDC DOWNLOADS TIDY v1.1" -ForegroundColor Cyan
+Write-Host "`nDC DOWNLOADS TIDY v1.2" -ForegroundColor Cyan
 Write-Host ("mode : {0}" -f $(if ($Execute) { 'EXECUTE - files will be MOVED' } else { 'DRY RUN - nothing will move' })) -ForegroundColor $(if ($Execute) { 'Yellow' } else { 'Green' })
 Write-Host "from : $Downloads  (root only, no recursion)"
 

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Scriptability Check"
+  short_description: "Turn local objectives into one-shot PowerShell"
+  default_prompt: "Use $scriptability-check to turn this local objective into one complete PowerShell automation."
+
+policy:
+  allow_implicit_invocation: true
