@@ -4,6 +4,7 @@
 `canon/source-prose/2026-09-26-orocy-burning-planet-verbatim.md`
 **Registered by:** canon-keeper P1 REGISTER. Labels per design-law LAW B.
 **Archive law:** append-only. This file adds strata; it corrects and supersedes nothing.
+**In-session update 2026-09-26:** two lines edited after David ruled `PHYR = fire` later the same session — the §4 ARBITRATE row and the §5 OPEN item. Both edits are marked inline and point to `2026-09-26-phyr-root-fire-ruling.md`. Nothing else was touched, and this file had not yet entered the skill archive when they were made.
 
 > **P2 HARVEST NOT RUN — stated plainly.** Canon-keeper requires past-conversation mining before
 > declaring any subject absent. This session is a Claude Code cloud container with **no past-chat
@@ -144,7 +145,7 @@ where this passage lands. None of it is a correction and none of it closes an OP
 | **omen** (the mirage) · **Psychosis and Fear** · **cavitations** | **three elementals as pre-utterance states (Omen / Primeval Fear / Cavitation)** | manifest row 28, chat #28 2026-06-24, MINED | **Strongest convergence in the passage.** All three established pre-utterance states appear, in order, in the mirage sequence. Whether that is deliberate is David's to say. |
 | **Dark-Light Templar** + **Neutronic psychosis** | chat titled **"Neutronic dark templar character design"** (Ode to Extinction, Antiphon, Nū'TjrÔn, **Trjô'Phyr**, Nōj'Vaā, Void-Fall, Sacraments, five zeal-states) | manifest row 6, chat #6 2026-05-25, **PARTIAL — D//C declared drift in that session's doc; treat with source caution** | Likely the founding stratum for this title. Flagged, not merged — the drifted body was never surfaced. |
 | **dark-light** as Drohj's register | *"the dark-light plasma totem, Drohj's elemental totem"* | discord-elemental-totem/SKILL.md:4 | Convergence on the compound itself. |
-| **Phyronic** entity | **ICHOR'PHYR** (✅ confirmed canon) · **Trjô'Phyr** (◻ unmined) · **Dra'Qon'Phyr** (Fos'O-Fos'O) · **Phoqyron** (Drohj = the Last Phoqyron) | seed-terms.md; manifest rows 6, 28; canon-snapshot | **PROPOSED / ARBITRATE.** *PHYR* recurs as a root across confirmed canon. Whether "Phyronic" belongs to that family, or to *Phoqyron*, or to neither, is **David's ruling — I am not making it.** |
+| **Phyronic** entity | **ICHOR'PHYR** (✅ confirmed canon) · **Trjô'Phyr** (◻ unmined) · **Dra'Qon'Phyr** (Fos'O-Fos'O) · **Phoqyron** (Drohj = the Last Phoqyron) | seed-terms.md; manifest rows 6, 28; canon-snapshot | **RULED 2026-09-26 by David: "Phyr is fire."** Phyronic belongs to the PHYR root; Oro'Cy is a fire-natured entity. See `2026-09-26-phyr-root-fire-ruling.md`. Phoqyron NOT ruled. |
 | **Plasmatic Arch'Sphera** | **Sphera Phonoton** (◻ unmined) · *wraith-sphera ruled descriptive-only* | seed-terms.md; manifest row 4 | Possible kinship. Unresolved. |
 | **"a guardian, sworn, failed"** | **nine-Sworn roster OPEN**; *"oath held open"* | manifest rows 19, 20 | **PROPOSED.** There is an open Sworn roster and an open oath. Oro'Cy presents as a sworn guardian. Whether he fills one of those slots is **David's call, not mine.** |
 | The chant / call-and-answer / third-heart CALL | **Antiphon** (◻ unmined); **Drohj's Antiphonic Starform** | seed-terms.md; ascent-fall-vfx/SKILL.md:62 | Convergence on antiphonal structure — a call that is answered. |
@@ -158,7 +159,7 @@ where this passage lands. None of it is a correction and none of it closes an OP
 - **Who answered Oro'Cy** after Drohj's chant had stopped. The text asks it and leaves it: *"SO who had jsut answered him then?"* — and earlier, unattributed: *"You are talking with me."* **This is open in the prose itself. Filling it would be a violation.**
 - Whether Oro'Cy is one of the **nine Sworn**, a Descendant, or neither.
 - **Which planet** burns here. Human-kind is named; Vaehr is named only as the world whose primeval reptilians the pylon sounds like. Not stated as the same planet. **Do not assume.**
-- Whether **"Phyronic"** attaches to the PHYR root, to Phoqyron, or stands alone.
+- ~~Whether **"Phyronic"** attaches to the PHYR root, to Phoqyron, or stands alone.~~ **CLOSED 2026-09-26** by David's ruling: PHYR = fire, Phyronic is of that root. `Phoqyron` remains unruled. See `2026-09-26-phyr-root-fire-ruling.md`.
 - Preferred spelling among **Oro-Cycthonos / Oro-Cy'Chthonos / Chthonokaen**.
 - **Timeline placement** relative to the four-book structure.
 - How the **third-heart CALL** relates mechanically to Zeal-states, the Ode phases, and the Sacraments.

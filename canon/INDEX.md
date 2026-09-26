@@ -1,7 +1,7 @@
 # INDEX — Subject → Files (derived, regenerable; contains no canon)
 
 Regenerated 2026-09-26 (sixth cut) by the canon-keeper. Adds the 2026-09-26 Oro'Cy session.
-Reading order for the 2026-09-26 session: 2026-09-26-orocy-chthonokaen-sorrow-resonant.md (registration) -> source-prose/2026-09-26-orocy-burning-planet-verbatim.md (primary source, verbatim). Rewritten on every append; all other files are append-only. Reading order for the 2026-07-06 Dja'Inn session: mage-tower-cenn-armour-arc → fire-consumer → residue-substrates → nigredo-lantern-engines → great-work-infinity-plane-noxuss → doctrine-all-force → legend-is-sacred → noxuss-corrected → noxuss-visual → authorial-creed.
+Reading order for the 2026-09-26 session: 2026-09-26-phyr-root-fire-ruling.md (root ruling) -> 2026-09-26-orocy-chthonokaen-sorrow-resonant.md (registration) -> source-prose/2026-09-26-orocy-burning-planet-verbatim.md (primary source, verbatim). Rewritten on every append; all other files are append-only. Reading order for the 2026-07-06 Dja'Inn session: mage-tower-cenn-armour-arc → fire-consumer → residue-substrates → nigredo-lantern-engines → great-work-infinity-plane-noxuss → doctrine-all-force → legend-is-sacred → noxuss-corrected → noxuss-visual → authorial-creed.
 
 - **Dja'Inn / Djinn (Ja'in de jin / jin / jayin / Jahin / Jain / juhin)** → 2026-07-06-djainn-mage-tower-cenn-armour-arc.md (origin legend, exclusion law, pact & betrayal, fusion, vessel-binding, liberation clause, star eyes, Dja'Inn kings); 2026-07-06-djainn-fire-consumer-reading.md (fire the consumer, air=freedom, reagent use); 2026-07-06-djainn-residue-substrates.md (residue revelation: ash/dust/vapour; plasma rarity, field-binding); 2026-07-06-djainn-nigredo-lantern-engines.md (nigredo teaching, lantern-engines, three use-modes); 2026-07-06-noxuss-visual-canon-sigil-verbs.md (DJINN in old art, "Impale" verb)
 - **The Great Work / arts of Ascent/Fall (title doctrine)** → 2026-07-06-great-work-infinity-plane-noxuss.md (the path, the chiasmus, immortal mortals, elemental substrata); 2026-07-06-djainn-mage-tower-cenn-armour-arc.md (title-as-hidden-art, descendant genes, "human of the aeon"); 2026-07-06-doctrine-all-force-is-one-force.md; 2026-07-06-authorial-creed-worth-ship.md
@@ -45,6 +45,8 @@ Reading order for the 2026-09-26 session: 2026-09-26-orocy-chthonokaen-sorrow-re
 - **Spirit-blocking fallout / the cults** (enslavement tech that became the extinction) → 2026-09-26-orocy-chthonokaen-sorrow-resonant.md
 - **Mutant-light / parasitic-Gases / cellular-lattice bloom** → 2026-09-26-orocy-chthonokaen-sorrow-resonant.md
 - **Plasmatic Arch'Sphera** → 2026-09-26-orocy-chthonokaen-sorrow-resonant.md (possible kinship with Sphera Phonoton — ARBITRATE)
-- **Phyronic** (as a nature-term) → 2026-09-26-orocy-chthonokaen-sorrow-resonant.md (PROPOSED kinship to the PHYR root: ICHOR'PHYR / Trjô'Phyr / Dra'Qon'Phyr — David's ruling, NOT made)
+- **PHYR (root morpheme = FIRE)** → 2026-09-26-phyr-root-fire-ruling.md (RULED by David 2026-09-26; glosses ICHOR'PHYR, Trjô'Phyr, Dra'Qon'Phyr; `Phoqyron` NOT ruled; bounded by the Foothold law — gloss cannot overwrite canon reading)
+- **Phyronic** (Oro'Cy's nature = fire-natured) → 2026-09-26-phyr-root-fire-ruling.md; 2026-09-26-orocy-chthonokaen-sorrow-resonant.md
+- **Fire doctrine** (PHYR-fire vs Dja'Inn consumer-fire; the breath reading) → 2026-09-26-phyr-root-fire-ruling.md; 2026-07-06-djainn-fire-consumer-reading.md
 - **The cave where an ancient being once froze a neutron-star** → 2026-09-26-orocy-chthonokaen-sorrow-resonant.md
 - **Primary-source prose** → source-prose/2026-09-26-orocy-burning-planet-verbatim.md (verbatim, uncorrected)
