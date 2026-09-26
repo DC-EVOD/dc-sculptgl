@@ -30,7 +30,8 @@ from urllib.parse import urlparse, parse_qs
 PORT = 8571
 ORIGIN = 'https://dc-evod.github.io'          # proven probe pattern
 HERE = os.path.dirname(os.path.abspath(__file__))
-ENGINES = {'intake': 'intake.py', 'rings': 'edge_rings.py', 'bake': 'bake_out.py'}
+ENGINES = {'intake': 'intake.py', 'rings': 'edge_rings.py', 'bake': 'bake_out.py',
+           'panel': 'panel_stack.py'}
 MAX_BODY = 256 * 1024 * 1024                  # 256 MB mesh ceiling
 
 def find_blender():

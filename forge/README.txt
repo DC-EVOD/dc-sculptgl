@@ -9,9 +9,16 @@ THE WORKFLOW (works today, nothing to install):
    engine in headless Blender and hands back the processed .ply.
 5) Load it on the sculpt site via the normal file open. Done.
 
-The engines in this folder (intake.py / edge_rings.py / bake_out.py)
-are what Claude runs — kept in the repo so the pipeline is versioned
-with the addon.
+The engines in this folder (intake.py / edge_rings.py / bake_out.py /
+panel_stack.py) are what Claude runs — kept in the repo so the pipeline
+is versioned with the addon.
+
+panel_stack.py builds the shrinkwrap armour-panel setup (base mesh +
+Mirror/Subsurf-KeepCorners/Shrinkwrap/Solidify/Bevel/WeightedNormal +
+wrap & offset vertex groups). Run it bare to self-test on a demo panel:
+  blender -b -P forge/panel_stack.py -- --out panel.blend
+VERIFIED on Blender 5.0.1: modifier order correct, offset group displaces
+by exactly the configured amount. See forge/ledger/ for where it came from.
 
 OPTIONAL, LATER: forge_daemon.py makes the buttons instant by running
 the engines on any machine with Blender + a reachable address (e.g. a

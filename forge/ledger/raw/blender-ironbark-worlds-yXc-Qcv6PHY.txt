@@ -1,0 +1,433 @@
+# How to Build Detailed Game Worlds in Blender
+URL: https://www.youtube.com/watch?v=yXc-Qcv6PHY
+Author: Ironbark Games Studio
+
+# How to Build Detailed Game Worlds in Blender
+
+- Channel: Ironbark Games Studio
+- Length: 01:05:01
+- Views: 4.1K
+- Keywords: blender, blender 3d, 3d, stylised, game, environment, how to, make, create, build, develop, 5.0, 4.0, 3.0, blender 5, blender 5.0, unity, substance painter, substance, model, modelling, modeling, 3d modelling, 3d modeling, blender tutorial, tutorial, learn, series, stylized, education, architecture, landscape, arch, bridge, cliff, mountain, how to model a stylised game environment, modular
+- Language: en
+
+## Description
+
+In this tutorial series you will be taken through the complete development process to create a stylised game environment for Unity. We will be using Blender for modelling and Substance Painter for texturing, and all you need to get started is basic knowledge of the Blender interface. 
+
+In the first part of this series we will make a plan for the type of environment we wish to create. Then, we will move onto modelling the main environmental elements in 3D. This will be architectural elements such as an arch, bridge and brick wall as well as landscape meshes such as cliffs. These meshes will be ready for texturing which you can learn here:
+Baking Stylised Textures | https://youtu.be/jui4ypkSg_E
+UV Mapping and Texturing | https://youtu.be/KHM3zsjJUNs
+
+Chapters
+
+Check out the Patron for a range of benefits including starting files, tutorial notes and early access to the full course:
+https://patreon.com/IronbarkGamesStudio
+
+## Chapters
+
+- 00:00 Introduction
+- 00:35 Planning
+- 01:30 Modelling the Arch
+- 21:23 Modelling Bricks
+- 27:57 Modelling the Bridge
+- 55:40 Modelling Cliffs
+- 01:04:17 Outro
+
+## Transcript
+
+Good day, Michael here and in this tutorial series, you'll be taken through the complete development process to create a stylized game environment. We will be modeling architectural and landscape elements in Blender, bringing those models into Substance Painter for the texturing or if you prefer a flat shaded art style. We can do that quite simply in a free software. Then bringing all of our models into Unity where we'll sculpt a terrain, place in the assets, and create some nice looking effects to really tie it all together and make it look pretty. Subscribe to the channel so you don't miss out on each part released weekly. Or if you can't wait and want access to starting files, tutorial notes, and the completed scene, then check out my Patreon. Now, before we get modeling, let's briefly discuss the planning stage. You'll want to think about the type and artistic style of your environment before collecting some reference images. For this scene, my aim is to create a desert environment with a winding river that has carved its way through steep canyon cliffs. Some past civilization has built some stone arches and bridges through the sands, but these structures are now in disrepair.
+Inspiration for the brick and column architecture has been taken from Elden Ring and Horizon Zero Dawn. The aesthetic will be a bit lower poly and stylized like Journey, but not quite as simplified. And all of these games have desert-like environments to draw inspiration from. Finally, if you're working on your own environment, it is worthwhile doing a very simple block out of the scene. You can do it in the game engine or modeling software, and it really helps to give an idea of what assets you'll need to create, what scale they are, and how they will fit the scene. Otherwise, just follow along with me. We're going to start with some basic architectural modeling in Blender by creating an archway. So, I'm going to shift select the camera and the light and then hit X and delete. I'm going to select my cube and press tab to go into edit mode and press S0.5 and enter. and that will scale it down by 50%.
+So we have a 1x one meter cube. I'm going to hit three to go into face selection and I'm going to select the bottom face down here.
+I'm going to go up to the snapping menu and I'm going to change it to grid.
+And so now if I press G and Z to move along the Z axis and hold down control, it's going to snap to the grid. And we want to snap it to the sort of floor of the grid down here.
+And I'm going to left click and select the top face and press GZ minus0.4.
+So we should have this sort of 10 cm high platform to start with.
+I'm going to hit CtrlR and mouse wheel up once and then that's going to create two edge loops. So I'm going to left click to confirm and then right click to cancel the move. I'll do that again. Hit CtrlR, mouse wheel up once, left click, and then right click.
+Now I'm going to scale them out. So I'm going to hit S X 1.9.
+I want to do it for the other two loops.
+So hold down alt and leftclick to select a loop and then alt and shift leftclick to select the other loop. Then hit S Y1.9.
+I'm going to hit three to go back into face selection and select these three faces here. And I'm going to hit E to extrude. And I'm going to go 0.5. And then hit enter.
+I want three more extrusions cuz I want to create this archway in here. So E 0.1. Enter. E 0.1. Enter. And one more time. E 0.1. Enter. I'm going to select these four faces in the front here and hit E to extrude. And I'm just going to pull them back a little bit.
+And we're starting to get some uh sort of overlapping faces up the top. So I'm just going to grab these faces here, hit X, and delete them. So I want to create a bit of an archway in here. So, I'm going to hit two to go into edge selection and select these two top edges and hit S and X to scale them on the X-axis and sort of bring them reasonably close together like that.
+We'll work our way down and select these side edges and just sort of scale them in to create this bit of an archway.
+Okay, something like that.
+To finish this up, we're going to create a face in here. So, I'm going to select these two side edges and hit F to create a face.
+And we don't need all of these faces around the back and sides. I'm going to hit three. And I'm going to select all these faces. You can hold shift and select them one by one. A little bit of a shortcut is if you press C and then you can just left click and drag with this uh selection tool. Hit C again.
+Left click and drag. And then just right click when you're done selecting.
+And then we're going to hit X and delete all of those back faces there.
+We also don't need any of these faces on the base as well. So again, hit C, select them, X, and delete those faces.
+We're going to turn two things on now.
+We're going to come up to the right uh top right hand corner here and we're going to click on the automerge vertices. So if two vertices are overlapping each other, they're going to merge together. And then back in the snapping settings, we're going to set this to vertex. So we can snap the vertices together and then they'll merge together as well. So we're going to come to the front here and I'm going to select these three top edges here. I'm just going to extrude them up on the Z by 0.1.
+And we have a number of edges that we can kind of clean up here.
+So I'll press one to go into vertex selection.
+Going to select the top vertex here.
+Press G to grab. Then I'm going to hold down control so it snaps to a vertex.
+And I'm going to snap it to this top right hand corner. And then when I left click, that's going to merge that verticy with the one beneath it. And I'm going to come down here and do the same thing. So, select it, press G to grab, hold down control, and then left click.
+And what we're doing here is creating this triangle fan.
+We'll do the same with the other side.
+Now, we'll select that top vertex, G to grab, and we'll snap them all up to that top vertex.
+So, we're saving on our polyc count, being a bit more efficient, and it's going to be a little bit cleaner when we try to uh combine things together. With that done, we now need to copy this side onto all of the other sides. So, I'm just going to select all of these faces here. Again, we can press C, just marquee select all of them. Don't forget the ones on the inside and that one down there. And we want to duplicate this and rotate it around. Now the cursor is in the center of the scene. So that's going to be a very useful point. So we're going to press period on the keyboard.
+We're going to change the pivot point to the 3D cursor.
+We're going to press shift D to duplicate it. And then right click to cancel. Then we're going to hit R Z and 90.
+And that's going to rotate it 90° around that central point.
+Same for the other side. Shift D, RZ 90.
+Shift D, right click, RZ 90.
+Now, because we have that auto uh merge turned on, they should be combined together.
+We're going to press two to go into the edge selection, and we're going to create a face up the top here. So, select two of the opposite faces. F to create a face.
+And from here, you can just sort of start shaping the pillar how you want.
+We probably also want our pivot point back to uh what it was before. So, press period again. And then we'll set that to the median point. From here, let's just extrude up on the Z.
+We can scale it out a little bit.
+Extrude up again.
+Extrude. I'm going to cancel this one.
+And then scale it inwards.
+And then we'll extrude up one more time.
+So now we've got a pretty good base here for our pillar. Now is probably also a good time to turn off the automerge vertices just in case anything gets caught up and attaches to each other.
+Still in edit mode, I'm going to press shift A and I'm going to add a cylinder.
+You'll notice down the bottom left we've got this add cylinder um tab here which we can open up. We can adjust some of the settings. I'm going to change the vertices to 20.
+Now, for our cylinder, we don't actually need the bottom and top faces. I'm going to press three to go into face selection. Select the top and the bottom. Hit X and delete those faces there.
+I'm going to select the rest of the cylinder. We can alt leftclick to select that and just move it up on the Z axis.
+Now, I do want to snap it to the base of this pillar. So, if we hit G and Z and then hold down control for our uh vertex snapping, it'll snap to the the base there.
+And I want to make this a bit thinner.
+So, I'm going to hit S for scale. And then I'm going to press shift zed. So, that's going to scale it on the X and Y, but not the Z axis.
+I do want it a little bit taller. So, I'll press two to switch to my edge selection. Alt leftclick the top loop of edges and just grab or G and then zed and then move it up a little bit. From here, we can add a little bit of detail to our pillar or column.
+Let's uh come into the top and just scale it down just slightly.
+And I'm going to add some loop cuts in here. So I'll scroll out to start with, hit CtrlR to add a loop cut in the center. I'm going to move it up around to the uh the top and then left click to confirm the placement.
+Crl R. Just got to move that up again.
+Ctrl R about there.
+and CtrlR again in there.
+So, I'm going to switch to face selection three. Alt leftclick this loop of uh faces and then scale shift Z so it's on the X and Y axis to scale it out a little bit like that. Hit two to go to edge selection. Alt leftclick on this loop of edges. Scale it out a little bit.
+So now we have some detail up the top.
+Might look a little bit thick. If it is, we can select all of the uh vertices at the top and scale them down a little bit. Quick way to do that, if you hit Alt Z, you go into X-ray selection, one for vertex select, and then left click and drag for the marquee tool.
+Alt zed to get out of X-ray. Now that they're all selected, we can do a sshift zed to scale it all down. If you want to scale all of it down at the same time, come down to the bottom and add a little bit of detail down here. Ctrl R. Left click. Pull this down.
+Add another edge loop. Crl R.
+Add another one there and there.
+Let's uh grab all of these and scale them down. So, sshift zed. Scale them in.
+Going to grab these ones. Scale them in.
+Sshift Zed.
+Maybe move them down a little bit. GZ.
+And again, grab this uh center edge and size that out.
+Okay. So, now we have our column done.
+We can copy and paste this bottom part of the pillar up the top. So we just need to select any part of it and then hit Ctrl L to select all of the connected uh faces or edges vertices.
+Press shift D to duplicate it. And then I'm going to press Z to move it up on the Z axis.
+We can hit S to scale it down.
+GZ and then hold down control to snap it to the vertex there.
+And if we wanted to, we could make some adjustments to the shaping as well.
+Maybe we don't want the top bit here.
+So, I'm just going to select those faces. X. Delete them. Don't need these ones either. Delete those.
+And then we can just uh create a face at the top again by hitting F. Now, we want to create the actual arch piece up the top.
+So, I'm going to press shift A and add a cube. This time, I'm going to press G and Z to move it all the way up to the top and scale it down and move it down so it snaps to the top of our pillar here.
+Also going to move down the top face as well. So G and Z.
+So the aim here is to create the shape of our arched piece before we actually make it arched. So it's a lot easier to add in details now and then curve it around. So I'm going to add in a few edge loops again. Crl R.
+Scale these out.
+Might grab these end faces.
+and just scale them down.
+Create some more edge loops.
+Going to grab these end faces here.
+Auto extrude these. E.
+I'm just going to right click to cancel.
+Then S and Y to scale them on the Y axis.
+Do that again just a little bit.
+And we want to grab these end bits and scale them down on the X just to kind of round them off a little bit.
+Like so.
+So, this is the sort of pattern that we're going to have in our archway.
+What we want to do now is select all of these top faces.
+And I want to get into the front view.
+So I'm going to press one on the numpad.
+And we're basically going to curve this out. To do that, we're going to use this tool called the spin tool. So if you click on spin here and we want to set it to the Yaxis. So we can see this green um well circle if you hover hover over it. And if you pull that out you can see it's sort of curving that around. Obviously the settings aren't great at the moment. So we're going to open up the spin settings once we've uh made our initial curve.
+We don't need that many steps. So we're going to set that down to eight.
+The angle we're going to set to 90. Now, we're going to adjust the arrows here.
+So, we've got this uh red arrow, which will move it left and right. We've got this green arrow, which will move it up.
+So, I'm just going to move it out about there.
+Maybe down and across a little bit.
+We'll move it to about there. So, we have half of an arch. Now, we want to use the mirror modifier to copy it to the other side. So, I'm just going to select my select box up here to get rid of the uh the spin.
+Let's hide that again. And I'm going to go to the modifiers tab on the right.
+So we still got our arch selected in edit mode. So I'm going to add modifier and we're going to search for mirror and add the mirror modifier.
+And it's mirroring it based on the center point of our arch. So, if we just press A to select all of the uh vertices or faces of our arch and press G and zed, we can move it across to the right.
+And I don't want it quite touching. I want to have a little bit of um an object in the middle here.
+And for the object that's going to go in the middle, I'm just I'm just going to press shift A, create a cube.
+Little bit of a problem with this cube is that it is uh overlapping with each other here. So, we're going to create a loop cut in the center. CtrlR. Create a loop. Just right click. And then we're going to delete one side. So, if we select that one face, X, and delete the uh vertices, that'll delete those faces around the outside as well.
+One little problem. If we uh select all this with L is that if we grab it, it slides apart. So if we click on clipping and we grab it now, it's not going to detach.
+So now we can move this down to the center here.
+Uh maybe shape it a little bit.
+Move that across a bit.
+And the arch is looking pretty good right there.
+There's one sort of issue though with the shading is that you can see all of the faces particularly on the sort of rounded uh sides of it like this column.
+So we want that to be nice and smooth.
+So we're just going to hit two to go into edge selection and we want to come up to the select menu down here. We're going to click on sharp edges. So that's going to select all the edges of a what it detects as a sharp angle. Then I'm going to rightclick and select mark sharp.
+Hasn't changed the shading. We need to press tab to get out of edit mode.
+Right click and go shade smooth.
+If it looks a little bit funny, it might not have selected some of the sharper edges. So we could press tab to come back in here.
+Perhaps we could select these edges around here.
+Right click and select mark sharp. So now have a hard edge in there.
+Maybe some of the other ones it's missed too. So we can select this one.
+We can select that one. Right click.
+Mark sharp.
+And uh looks like should do these ones as well.
+And mark sharp.
+Okay, the arch is done. So let's just call this something like arch.
+And then if we want, we can uh hide it so we can work on some other things.
+Whilst we're at it, it's a good time to save our project.
+The next thing we're going to tackle is making this wall of bricks. And this is going to be a piece that we can duplicate around to form a more continuous wall or separate into individual bricks. And we're also going to reuse this model for creating a seamless brick texture in a later tutorial.
+Now, there is a a really easy way to make brick walls in Blender, but we're going to need to enable a plugin for this. So, if we go to the top left, edit, preferences, and we're going to click on get extensions, and we're going to search for the extra mesh objects.
+Click on install.
+Go to the add-ons.
+Extra mesh objects should be ticked on in here. So, we can close that now.
+And if we press shift A and we go to mesh, we should have an extras um button down here.
+And I'm going to select the wall factory.
+So, immediately it gives us a pretty big wall. It also gives us this uh window in here. So, there are quite a few settings you can mess around with to create uh an interesting wall, but we're going to create a pretty small 2x2 m square uh wall that we can duplicate later. So, for these settings, I'm going to type in the start is going to be 0.01.
+So, it's going to start right here in the center. And then the end is going to be two. So, it's going to be 2 m across.
+Obviously, the uh the bricks are way out of scale for what we want. Now, uh the bottom can stay at zero. The top is going to be two.
+The edging I'm going to set to 0.15.
+The width 0.12.
+Variance, we're going to lower that to 0.15.
+The minimum I'm going to set to 0.31.
+So the bricks are quite small now but they do have quite big gaps in between them.
+The height 0.16 variance 0.15 and the minimum 0.07.
+The depth I'm going to set to 0.2.
+Uh the variance 0.04.
+And the minimum that can stay as one.
+For the grout settings, the thickness is going to be 0.01.
+The variance is 0.01.
+The depth 0.16.
+And this variance will be zero.
+We don't want any opening. So, we can tick that off.
+And once that's done, we should have a fairly sort of compact 2x2 m square wall with not too much depth and a little bit of variation in the thickness of the uh the bricks or how far they pop out. So, that was a lot easier than modeling these one by one, but there's still a few little tricks we can do. So, I'm going to go into edit mode, press tab.
+That will disable our settings down here, so we can't get those back. Once you uh go into edit mode or get out of the um builder tool, I'm going to press two to go into edge selection.
+And then I'm going to do my select sharp edges.
+Should get all of the sharp edges pretty nicely for this one cuz they're all 90° angles.
+Then I'll right click and select mark sharp. Outside of edit mode, I'll right click and shade smooth.
+So we shouldn't see any smoothing applied to it. But once we start to round these off a little bit, that's when it's going to kick in. Hit tab to go back into edit mode. I'm going to select all of the faces by pressing A.
+And then I'm going to go to edge and subdivide.
+So, it's going to create additional uh loop cuts or edges through here. But there's a little trick that we can do.
+So, we have a fractal value down here.
+If we set this to 1.2, two.
+It's going to give some random variation to these bricks. So, instead of us having to manually come in here one by one and uh add that variation ourselves, it's going to do it for us. We should still do a little bit of manual adjusting to the vertices. We can sort of see some of these are coming out quite far. So, just press one to go into vertex select and just grab some of these vertices and just sort of move them back in like that. also create a little bit more sort of variation on our own.
+If we're finding there's too many edge loops in here, we can just alt leftclick to select an edge loop, hit X, and if we hit dissolve edges, that will remove the edge, but it's not going to delete the face. So, we can just select that edge loop, X, dissolve, and so we can just come in here and sort of clean some things up.
+Another little trick we can do if you select one of these vertices on the edge is if you hit shift controlB, that's going to bevel the vertex. It's going to split it into this triangle shape.
+So this is quite a nice aesthetic for a more stylized look.
+So come around here and just shift controlbove these around and just do a little bit of extra shaping to get the look that you want. You can see that some of them are sort of clipping through each other. If we hit Alt Z, we can go into X-ray. We can select those vertices and just sort of pull them out like that.
+So that's our brick wall pretty much done. Obviously, you can put a little bit more time into sculpting the uh the other bricks down here. If we just press tab to go out of edit mode, we can see the smooth shadings affecting all the uh the front faces. Um but it's still keeping those nice sharp edges, particularly where we've beveled them.
+So, that is our wall done in here. So, we can hide this and we can move on to the next part. So, the next big bit is going to be modeling um a bridge. So, I'm going to hit shift A and I'm going to create a plane.
+I'm going to set the size to 3 m.
+Tap to go into edit mode.
+I'm going to rotate on the Y-axis by 90°.
+I'm going to move it up on the Z axis by 1.5 and move it back on the X axis by two.
+Uh, we'll go minus 2. GX minus 2.
+I'm going to hit CtrlR and create a loop down the center of my plane. I'm going to select those two outside edges or vertices and hit X and delete them.
+With that done, we can go to our modifier and add another mirror modifier.
+And we want it mirroring on the X and also on the Y. And we'll turn on clipping as well.
+So, we're going to curve this like we did the arch. So, we need to create some sort of interesting pattern before we uh do that. So, I'm going to go to edge selection, grab this outside edge, and just create a bit of an interesting shape around here.
+Just using extrusions.
+Okay, something like that. We want to select the top row of edges. So, just alt leftclick, go into front view by pressing one on the numpad.
+just uh get it in focus here for when we do our spin. So again, we'll use the spin tool. Should be set to the Y-axis.
+We'll curve that around. Now, we do know the exact distance between the two. So, we're going to set the angle to minus 90.
+And for the center Z, we're going to set that to three. So, that's going to create a perfect arch. But before we apply anything, what we want to do is select the sharp edges again. Right click and mark sharp.
+Go out of edit mode, right click and shade smooth. And now we're going to go to the modifier and apply the mirror modifier.
+So now we have an arch which we can duplicate across multiple times for our bridge. There is another modifier which is really useful for doing this. So I'll click on the add modifier and I'm going to search for array.
+And I'm going to set the count to five.
+And I want a little bit of spacing between the pillars. So I'm going to set the offset X to 1.1.
+You could leave it here, but I kind of want our center arch to be a little bit bigger than the rest. So, I'm actually going to apply this array modifier.
+And I need the center back in the middle of our scene here. So, to perfectly recenter the mesh, I'm going to hit tab to go into edit mode. Just go back to my select box here.
+And I want to select these two inner vertices in there. And I'm going to press shift S and select cursor to select it. And that's going to put the cursor between those two points.
+Now if I press tab and right click, I can go set origin and origin to 3D cursor. And that's going to put the pivot point of my mesh to the cursor.
+So, all I need to do now is reset the position of my mesh. So, I hit altg to move it back to the center. And if I want the cursor back to the center, I press shift C. Now, I want to get that mirror modifier back. So, I'm going to hit tab to go into edit mode. I'm going to go from a top view. So, I'm going to press seven on the numpad. Alt zed to go into X-ray. I'm going to select all of the vertices on the back half and then hit X and delete vertices.
+I also want to select all of the vertices on the right hand side.
+And in fact, I'm going to select all the vertices on the top part of the arch as well. Uh cuz I'm going to make this arch a little bit bigger. So, I'm going to hit X and delete those. Now, I can go to my modifier, search for my mirror again.
+We do want it mirrored on the Y-axis. We do want clipping turned on. Still in X-ray, so I just hit Alt Z to get out of X-ray.
+I'm going to press A to select all of the uh vertices left. And I'm going to move them on the X-axis. So GX, I'm going to go minus0.5 to move them across.
+I'm going to select the top loop of uh edges here. So, alt leftclick.
+I'm going to move them up on the Z by 0.5. So, GZ 0.5.
+I'm going to hit one to go into my front view again.
+Get my spin tool back. Going to grab the spin tool again. I'm going to set the angle to minus 90. And again, we know exactly the position that we need this at. So, we're going to set the Z to 3.5.
+We do need to fix up the edges, mark them sharp again. So, I'm just going to hit W to get back to my select box.
+Two for the edge selection.
+And we can manually select these in here.
+Right click, mark sharp.
+Okay.
+Press tab again. And those are the arches done of our bridge. So now we need to sort of fill the bridge in with the uh the sides and the top. So I'm going to press shift A. And I'm going to create a mesh and plane for this.
+Going to press tab to go into edit mode.
+Going to move it up on the Z by 9 mters.
+I'm going to scale it on the X by about 10.
+And I'm going to extrude it down on the Z by nine.
+Probably a little bit too far up. So, we can always grab that top face and uh move it down a little bit.
+So, what I need to do now is sort of carve out the holes so that the arches can actually go all the way through.
+And I do want to scale this out so that it's sort of lining up with the edges of the arches here.
+Okay, I'm going to hit CtrlR and I'm going to put a bunch of edge loops in here. I'm going to scroll up so that I have 19 cuts.
+Left click and then right click. And I want to create a bit of a bulge from one side of the bridge to the other. So I'm going to select the two end edges.
+And I'm going to press O for proportional editing. That'll turn on proportional editing up here. Now, if I press G and Z, you'll notice this little circle in the middle. If I use the mouse wheel, I can increase or decrease the size of that uh circle. So, I want to create a bit of a bulge like this.
+Now, I know I am ruining the bottom of the bridge a little bit, but I've got quite a nice shape in there. Uh maybe I'll move the whole thing up just a little bit as well. Uh let's grab these top faces. Uh, if you select one face, hold control, left click another, it'll select all of them in between.
+Uh, let's press O to turn off proportional editing. Grab Z to move it up a little bit.
+Like that. Uh, to fix up this bottom bit here, I'm just going to select these faces here, and I'm going to press S zero.
+And that's going to flatten them. And I'll grab Gzed.
+Hold down control for snapping. So it snaps to the bottom of the arch there.
+So we have a nice shape to our bridge.
+Now we need to create those holes. So hit CtrlR to create an edge loop. Going to set it just sort of intersecting with one of those arches here. And what we want to do is we want to grab these vertices and move them so that they intersect and are sort of hidden by that bevel of the arch.
+Like so. Now, obviously, some of them won't line up perfectly. So, we do need to grab these ones and uh move them back a little bit.
+Keeping in mind, we don't want to ruin the nice shape on top of the uh the bridge.
+We don't really want to ruin this center line. So, I might not actually move that one in here. And instead I might just add a new cut to the side. Control R.
+And we only really need to do one side.
+So let's delete this right side.
+And we'll put a cut in the center.
+And we'll delete this back half as well.
+And we can add our mirror modifier to the X and the Y. We'll turn on clipping as well.
+And we can just delete these faces in here.
+And we can delete the faces on the bottom as well.
+We can see a little bit of clipping. So, let's just uh move that across a little bit.
+Okay. So, now we have the holes through there. We have the arches and we've got the sort of top and sides of the bridge done.
+Again, let's add in our sharp seams. In fact, we don't need these uh side faces as well.
+Just select those edges, mark sharp, right click, and shade smooth.
+Continuing on with the bridge, let's create some bases for the pillars. So, do shift A.
+We'll create a cube.
+And we'll just hit tab.
+We'll line it up underneath one of them.
+Put in a loop cut. Scale that.
+Let's scale that in. Get a bit of shaping.
+Just press A.
+Scale that in a little bit. And then we'll go shift D on the X to duplicate it.
+And we'll do shift D on the X, duplicate it again.
+I might have this wall come a little bit closer in.
+Now that we have the bases in here, we've got the pivot point in the middle, we can add our mirror modifier on the X. And then we can just apply that.
+I'm going to create some sort of rails along the top of the bridge. So going to select the top plane here. Press tab.
+And I'm going to select the top set of faces up here. Uh hit shift D to duplicate them. And then I can hit P to separate the selection into a new mesh.
+Now we still have the old one still selected. So press tab again. And then if you click in here, or if you can't quite select it, select the uh duplicate in here and you press tab. You can see we've just duplicated the faces from that mesh.
+I'm going to untick clipping so that when I move it out, it's not going to snap to the uh the middle here. And I think what I want to do for the edge, sort of move these across.
+Select these faces and extrude them up.
+Might just move these back in a bit if we wanted. We could create a loop cut and uh maybe extrude this part out a little bit. Like so.
+Shading's gone a bit wonky. So, let's select the sharp edges. Make sure we're in edge selection when we do that. Select sharp edges.
+Right click, mark sharp.
+Going to hit tab to get out of that. And I'll kind of want to add some towers to the ends of the bridge. So, let's hit shift A and create a cube.
+Again, press tab to go into edit mode.
+Going to move this to the end.
+And I realize I do actually want the base pillars of the bridge to be um sitting on the the floor. So let's just go into front view numpad one. Move them up a little bit like that.
+And I want to do the same with this one as well. So let's go into edit mode and move that up.
+I can probably just snap it to the base there.
+Going to move this across a little bit as well, so it's intersecting.
+And just so we can have it occur on the back and the other side. Let's add a mirror modifier on the X and the Y. No need for clipping for this one. They won't be intersecting. Now, we're just going to start shaping the cube. So, let's add in a couple of loop cuts.
+I'm just going to create an extrusion.
+Scale it in a bit. Extrude up.
+Actually, for this one, I might just pull this one all the way up.
+We'll create an edge cut in here. Create an edge cut in here.
+Now select these outside ones.
+Extrude. Scale. Shift Z.
+Move it back on the Y.
+might actually scale those in a little bit more.
+Let's add a little bit of detail at the front. So, if we select the two top faces, press I, pull them in. Now, they're joined in the middle. So, if we open up the inset faces, we can untick or we can tick on individual.
+Then, we can hit E to extrude them back.
+Now, we don't need any of the back faces. So, we can delete all of these.
+If we want, we can also scale these to make it nice and even even. So, S Y0.
+Going to select the top faces.
+Hit I to insert. Now we do want these connected. So untick individual.
+Maybe scale them down a little bit more.
+Going to delete these two faces here.
+Extrude all of these faces down.
+We can delete these back faces.
+We can pull these edges. So, let's do G Y. Hold down control to snap.
+And we can create faces in here and here. And we can also create a face across the bottom there.
+We do actually want this brought down a little bit below the floor as well. So, we might just grab all of these Let's do a G zed. Move them down so they're intersecting the floor so you can't see that gap.
+Okay. So, I sort of want this um tower along different parts of the walls, but just the sort of top part. So, I'm going to select this, hit Ctrl L.
+Let's go into our front view with numpad one. Shift D.
+Move it along the X. And then let's move it up bit on the Z.
+Going to hit one to go into vertex. Alt Z to go into X-ray. I'm going to select all of these vertices. Actually, I'm going to select all of these vertices.
+Hit X and delete them.
+I also want to delete these ones in here and move what's left up.
+Now I'm going to extrude this down on the Z.
+And I'm going to merge some vertices together.
+So to do that, I'm actually going to move this top vertex up out of the way first. Going to select these two vertices here and press M and merge at center.
+And we don't actually need this one. So just hit X and dissolve vertex.
+Going to select these two outside ones.
+M at center.
+These ones as well. M at center. But we do want to move that down a little bit.
+And we do have some ones hiding in here.
+So, alt zed for x-ray. Select them. M.
+Merge at center.
+Gzed. And then snap that there.
+So, we might want to shape this a little bit more by moving that a little bit up.
+Maybe we'll want to bring this whole point down a little bit as well.
+So, with this top part, pretty happy with that. Let's select a vertex. Press Ctrl L to select all the connected faces.
+Shift D. And let's just duplicate that across.
+Okay. So, it's looking pretty good.
+Little problem is that we're uh clipping through the uh railing here.
+You can also see that it's not quite covering the base um as well. So, we can either move these down or we could create a new face in between these edges like so.
+Either or will work.
+We will select that railing now.
+And I'm going to create some edge loops that intersect with those tower bits.
+So, CtrlR, line them up. And then we can just delete the bits that we don't actually want.
+So, let's delete those faces.
+again holding down alt and click on an edge to select the loop. Delete those and delete those.
+We might want a few little more details.
+So, we're just going to add in a cube.
+Just going to scale it down a fair bit.
+Going to move it up and out. And let's just move it across because we will apply a mirror modifier to the X and Y.
+Move that in down a little bit.
+And I might just give this a cut and create a little bit of a slant going back.
+And I'm just going to uh shift D and duplicate this across.
+So that's all looking pretty nice. We can add in our mark sharp edges on all of these objects as well. So, let's just select them. Uh, all these will be marked sharp. So, I can just press A, mark sharp.
+Same with these ones. I'm just going to press A and mark sharp. We don't have any curved edges we want to smooth off for those pieces.
+to create a bit more of a stylized effect kind of like the bricks. I can come into some of these parts and just start beveing the vertices. So, shift controllb to bevel those. If we hit G twice, double tap G, we can sort of slide the vertex around.
+So shift control B.
+If we don't do it on a edge here, we sort of create this uh four pointed shape. And what we can do if we select two opposite vertices and press J, that'll create an edge in between. And we do the same in here, J. So, we've got this sort of central vertex which we can then move around like so.
+I did forget to uh mark sharp these edges. So, uh let's just do that now.
+Press two mark sharp.
+And we'll shade them smooth as well. We might want these shaded smooth. So, we can select those and just clear sharp.
+Now we have this smooth sort of chunk out of it.
+Do the same to the uh the pillar here.
+Uh one thing to note is that it is being mirrored. So we might not want it apply to all of them. So if we want to apply the mirror first and then we can go individually one by one and start adding some little chips and uh variation to them. If you go too far and the edge sort of gets caught on another one like that, you will have some overlapping edges in here.
+Two ways to fix this. If we press Alt Z to go into X-ray and we marquee select it, we should have both selected.
+And then we can go M and merge by distance. That will merge those two vertices together. Or we can turn on our auto merge vertices.
+So just add a little bit more wear to it.
+Again we might want to create a edge in here. So J and then uh we might want to make that sharp.
+So, that is the bridge pretty much done.
+We could still add a bit more wear and tear to it, but I'm going to move on to the uh the next part now. So, I'm going to hide all of the pieces of the uh bridge. And the next thing we're going to make is a set of cliffs. So, moving on from the architectural elements to a bit more of the landscape elements.
+Again, there is a plugin in Blender that makes this really easy to do. So, we're going to go to the edit preferences.
+We're going to go to our extensions. get extensions and we're going to search for landscape. And there's this entape plugin that we're going to install. With the plugin added, you can press shift A to add a mesh. And down the bottom here, we should see landscape.
+So, let's add that in.
+We do have uh a bunch of operator presets up here. So, I'm going to drop that down and set it to Canyon.
+If we want a bit more resolution in the mesh, we can increase these subdivisions on the X or Y. So, I'm going to set the Y subdivisions to 400.
+And I'm also going to increase the uh the width of this as well. So, set the mesh size Y to four.
+If we want a different part of the canyon to sort of choose from, we can change the offset Y and sort of slide that along.
+to a bit that you like.
+We can change the shape from wave to bump if we want sort of more individual cliffs. So, I might make a couple of these. I like this one here. Might select a few of these sort of mountains out. So, let's just uh move that out of the way on the X. Press shift A. Create a new landscape.
+We'll change the shape back from bump to the uh default.
+Uh it was on wave before.
+There we go. So, we got a bit more of a longer sort of cliff in here. And I'm basically going to be cutting out the areas that I like, which I'm going to use later on in my overall landscape.
+So, I'm going to press tab to go into edit mode. Press one to select the vertices and just left click to deselect them. Going to press seven to go into top view.
+And I'm going to actually select the part of the cliff that I want to keep.
+So pressing C for the selection tool and just left clicking and dragging sort of the outline of what I want.
+So, I want this big canyon cliff in here.
+Sort of comes all the way down here and then back up.
+Then we just uh fill in the the middle in here.
+Okay, let's just uh make sure I've got all the bits that I want. So, do actually want those bits around here and grab that.
+Doesn't matter if it's a little messy.
+These are just going to be big background cliffs. So, the bases aren't really going to be seen. And this isn't something that you're going to be moving around on inside of the game.
+Okay, I have the part of the cliff that I want now. So, I can just delete the rest. So, I'm going to press Ctrl I to invert the selection.
+And probably want to delete that bit in there.
+Okay. And then we press X and delete the vertices.
+Okay. So, that's my cliff isolated. It's a little bit messy around the edges. So, I'm going to select all of those outside vertices.
+Again, this can be pretty rough.
+Though, I don't want to go too far in because we're going to flatten all of these outside vertices down.
+Uh to deselect if you press C and then middle mouse click that will remove selection and left click will add with right clicking canceling the selection.
+Okay. So, I've got all of those outside vertices selected and we want to flatten them down. So, we can use the same trick before with the uh SZ 0, but I'm going to turn on proportional editing first. So press O.
+So remember when we grab it, move it, it'll grab more vertices up. But the circle is quite large. So I'm just going to mouse wheel to uh to shrink it.
+So it's only sort of affecting that sort of bottom base area down here. And then we press S0.
+So to scale them all flat.
+And we can see it's sort of going down a little bit down here because the canyon's sort of gone down further. So maybe we just press G zed and just sort of move the whole thing down a little bit as well.
+And if we want to line this a lot up to the grid, let's just uh grab everything and just move it so it's roughly in line with the floor of the grid space.
+So that is our cliff in here.
+It's a little bit low resolution. So if you do want it a little bit higher, we could add a modifier called subdivision.
+And that's going to smooth it out just a little bit more.
+And then we can just repeat the same process on some of these other cliffs.
+So let's say we want this cliff in here.
+Let's just press C and select that one.
+Press Ctrl I to invert the selection. X delete the vertices.
+Select those outside vertices and then hit S zero.
+Maybe bring it down slightly and we'll line it up with the grid.
+So, that's pretty much it. We now have uh some cliffs. We could add a few more if we wanted to if we uh move those out of the way. We've got our arch, which is uh quite large comparatively.
+We've got the different parts of the bridge.
+Let's h just move the arch out.
+And we have the wall. Let's move that out, too.
+And if we wanted to scale these cliffs up to be a little bit more in proportion, we should move these cliffs over the uh the pivot point. So, let's just uh quickly grab that, move it over. That one's roughly in the spot we want.
+And we can just scale this up.
+And scale this one up, too.
+Again, these are going to be background objects. They're not really going to be stuff. They're not really going to be terrain that you'll be running over.
+We're going to be making that terrain separately inside of Unity.
+So there we go. We have quite a nice set of architectural and natural features to build up a landscape. From here, we'll want to texture our models by UV mapping them before bringing them into Substance Painter to create a set of stylized hand painted textures. And we're going to be looking at two different methods of creating texture types, unique and tiling. We'll also take a look at how to create a much simpler low poly style look without the need for Substance Painter. So, if you're interested in all of that, subscribe to the channel. The parts will be released weekly. And again, if you want everything right now, all of the notes and files, you can check out the Patreon link in the description. And I'll see you all next time.

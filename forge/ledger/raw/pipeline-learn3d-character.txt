@@ -1,0 +1,254 @@
+# AI × 3D Course: AI-Assisted 3D Pipeline · Learn3D AI
+URL: https://www.learn3d.ai/en/ai-x-3d
+
+AI × 3D Course: AI-Assisted 3D Pipeline · Learn3D AI
+
+# FROM IDEA TO GAME - READY CHARACTER FROM IDEA TO GAME - READY CHARACTER
+
+### New to 3D, ready with AI
+
+Maybe you've tried Blender and bounced off. Maybe you already use AI for 2D. Maybe you've never opened either. You want to make your own 3D characters and the traditional path takes years. AI is your way in.
+
+- Build 3D characters from scratch with AI handling the slow stages
+- Generate concepts, meshes, and textures with the right tool at each step
+- Skip years of Blender mastery; learn the cleanup AI can't do alone
+- Work the full pipeline: concept, sculpt, retopo, UV, bake
+- Ship a portfolio character end-to-end, not another half-finished tutorial
+- Build a reusable system you'll use for every character after
+
+- Build 3D characters from scratch with AI handling the slow stages
+- Generate concepts, meshes, and textures with the right tool at each step
+- Skip years of Blender mastery; learn the cleanup AI can't do alone
+- Work the full pipeline: concept, sculpt, retopo, UV, bake
+- Ship a portfolio character end-to-end, not another half-finished tutorial
+- Build a reusable system you'll use for every character after
+
+After the course: you go from a 2D idea to a textured, rigged 3D character, with AI doing the routine work.
+
+### Building a game solo or small team
+
+You're shipping a game, mod, or world but characters keep blocking you. Hiring a 3D artist costs more than the rest of your budget. AI and a connected pipeline put production-quality assets back in your hands.
+
+- Produce rigged, textured, game-ready characters in your own pipeline
+- Stop waiting on freelance 3D quotes
+- Iterate on art the same way you iterate on code
+- Export straight to Unity or Unreal with proper UV, normal map, ORM
+- Build the character library your game needs without hiring out
+- Use AI for what's slow; keep creative judgement in your hands
+
+- Produce rigged, textured, game-ready characters in your own pipeline
+- Stop waiting on freelance 3D quotes
+- Iterate on art the same way you iterate on code
+- Export straight to Unity or Unreal with proper UV, normal map, ORM
+- Build the character library your game needs without hiring out
+- Use AI for what's slow; keep creative judgement in your hands
+
+After the course: rigged, textured characters in days, ready to drop into Unity or Unreal.
+
+### New to 3D, ready with AI
+
+Maybe you've tried Blender and bounced off. Maybe you already use AI for 2D. Maybe you've never opened either. You want to make your own 3D characters and the traditional path takes years. AI is your way in.
+
+- Build 3D characters from scratch with AI handling the slow stages
+- Generate concepts, meshes, and textures with the right tool at each step
+- Skip years of Blender mastery; learn the cleanup AI can't do alone
+- Work the full pipeline: concept, sculpt, retopo, UV, bake
+- Ship a portfolio character end-to-end, not another half-finished tutorial
+- Build a reusable system you'll use for every character after
+
+- Build 3D characters from scratch with AI handling the slow stages
+- Generate concepts, meshes, and textures with the right tool at each step
+- Skip years of Blender mastery; learn the cleanup AI can't do alone
+- Work the full pipeline: concept, sculpt, retopo, UV, bake
+- Ship a portfolio character end-to-end, not another half-finished tutorial
+- Build a reusable system you'll use for every character after
+
+After the course: you go from a 2D idea to a textured, rigged 3D character, with AI doing the routine work.
+
+You're shipping a game, mod, or world but characters keep blocking you. Hiring a 3D artist costs more than the rest of your budget. AI and a connected pipeline put production-quality assets back in your hands.
+
+### Concept development
+
+Create strong 2D references for the entire character pipeline. In this module, students learn how to generate the core idea, refine it into a clean production-ready concept, split the character into parts, and prepare additional views for accurate 3D generation. This stage saves time on every step that follows and gives a clear visual foundation for the full workflow.
+
+You walk away with:
+
+A complete set of clean 2D references ready for 3D generation.
+
+Tools:
+
+### 3D model generation
+
+Turn your 2D references into initial 3D meshes using AI generation tools. Students learn how to choose the right generator, evaluate results, regenerate weak outputs, and bring selected meshes into Blender for further work. The goal is to get a usable base model and separate generated parts that are ready for cleanup and sculpting.
+
+You walk away with:
+
+A raw 3D base model and generated character parts ready for refinement.
+
+Tools:
+
+### Sculpting
+
+Clean up the generated geometry and reshape the character into a stronger final form. Students correct major artifacts, improve silhouette and anatomy, align the model into a proper pose, and prepare separate parts for assembly. This is where the AI result starts becoming an intentional character instead of just a generated mesh.
+
+You walk away with:
+
+A cleaned and sculpted high-poly character with improved anatomy and readable silhouette.
+
+Tools:
+
+### Retopology & optimization
+
+Convert the sculpted high-poly result into a cleaner, lighter low-poly mesh suitable for games and animation. Students learn how to use AI-assisted retopology, optimize mesh density, align low and high versions, and manually fix important topology issues. Special attention is given to silhouette preservation, deformation areas, and production-friendly geometry.
+
+You walk away with:
+
+An optimized low-poly mesh that matches the sculpt and is ready for UVs, baking, texturing, and rigging.
+
+Tools:
+
+### UV unwrapping
+
+Prepare the low-poly model for texturing by creating clean UVs. Students learn what UVs are, when automatic unwrapping works, how to detect mistakes, and how to manually fix seams, islands, and material organization inside Blender. This module makes the model technically ready for baking and texture painting.
+
+You walk away with:
+
+A properly unwrapped model with usable UVs and organized materials.
+
+Tools:
+
+### Texture baking
+
+Transfer high-poly detail onto the optimized low-poly mesh. Students learn the logic of baking, how normal maps and other texture maps are generated, and how to use both automated and manual baking workflows. The module covers practical baking pipelines inside Modddif, Blender, and Marmoset for production-ready results.
+
+A baked low-poly model with essential texture maps ready for texturing.
+
+### Painting + texturing
+
+Build the final surface look of the character using AI-assisted and manual texturing workflows. Students create and refine base color, adjust materials, paint corrections by hand, and build core PBR maps including roughness, metallic, and emission. This is where the model gets its final visual identity and starts looking portfolio-ready.
+
+You walk away with:
+
+A fully textured character with production-ready PBR materials.
+
+Prepare the character for movement by building or importing a skeleton and fixing deformation weights. Students learn the basics of rigging, compare different auto-rig solutions, and correct the most important weight-painting areas for clean animation. The module also includes a simple animation pass to test the character in motion.
+
+A rigged and animation-ready character with clean deformations.
+
+### Export to game engine
+
+Finalize the character for real-time use and presentation. Students learn how to export properly, prepare textures and maps for engines, and bring the character into Unity and Unreal Engine 5. The final result is a game-ready asset that can be previewed, tested, and presented in a real engine environment.
+
+You walk away with:
+
+A game-ready character successfully imported into Unity and Unreal Engine 5.
+
+### Concept development
+
+Create strong 2D references for the entire character pipeline. In this module, students learn how to generate the core idea, refine it into a clean production-ready concept, split the character into parts, and prepare additional views for accurate 3D generation. This stage saves time on every step that follows and gives a clear visual foundation for the full workflow.
+
+You walk away with:
+
+A complete set of clean 2D references ready for 3D generation.
+
+Tools:
+
+### 3D model generation
+
+Turn your 2D references into initial 3D meshes using AI generation tools. Students learn how to choose the right generator, evaluate results, regenerate weak outputs, and bring selected meshes into Blender for further work. The goal is to get a usable base model and separate generated parts that are ready for cleanup and sculpting.
+
+You walk away with:
+
+A raw 3D base model and generated character parts ready for refinement.
+
+Tools:
+
+### Sculpting
+
+Clean up the generated geometry and reshape the character into a stronger final form. Students correct major artifacts, improve silhouette and anatomy, align the model into a proper pose, and prepare separate parts for assembly. This is where the AI result starts becoming an intentional character instead of just a generated mesh.
+
+You walk away with:
+
+A cleaned and sculpted high-poly character with improved anatomy and readable silhouette.
+
+Convert the sculpted high-poly result into a cleaner, lighter low-poly mesh suitable for games and animation. Students learn how to use AI-assisted retopology, optimize mesh density, align low and high versions, and manually fix important topology issues. Special attention is given to silhouette preservation, deformation areas, and production-friendly geometry.
+
+You walk away with:
+
+An optimized low-poly mesh that matches the sculpt and is ready for UVs, baking, texturing, and rigging.
+
+Prepare the low-poly model for texturing by creating clean UVs. Students learn what UVs are, when automatic unwrapping works, how to detect mistakes, and how to manually fix seams, islands, and material organization inside Blender. This module makes the model technically ready for baking and texture painting.
+
+A properly unwrapped model with usable UVs and organized materials.
+
+### Texture baking
+
+Transfer high-poly detail onto the optimized low-poly mesh. Students learn the logic of baking, how normal maps and other texture maps are generated, and how to use both automated and manual baking workflows. The module covers practical baking pipelines inside Modddif, Blender, and Marmoset for production-ready results.
+
+You walk away with:
+
+A baked low-poly model with essential texture maps ready for texturing.
+
+### Painting + texturing
+
+Build the final surface look of the character using AI-assisted and manual texturing workflows. Students create and refine base color, adjust materials, paint corrections by hand, and build core PBR maps including roughness, metallic, and emission. This is where the model gets its final visual identity and starts looking portfolio-ready.
+
+You walk away with:
+
+A fully textured character with production-ready PBR materials.
+
+You walk away with:
+
+A rigged and animation-ready character with clean deformations.
+
+Tools:
+
+### Export to game engine
+
+Finalize the character for real-time use and presentation. Students learn how to export properly, prepare textures and maps for engines, and bring the character into Unity and Unreal Engine 5. The final result is a game-ready asset that can be previewed, tested, and presented in a real engine environment.
+
+You walk away with:
+
+A game-ready character successfully imported into Unity and Unreal Engine 5.
+
+Tools:
+
+180
+
+09
+
+Everything you need to go from zero to a game-ready character structured, practical, and fully supported.
+
+180
+
+09
+
+### Creator
+
+### Creator
+
+### Do I need experience in 3D or programming?
+
+No. The course is designed for beginners. Every step is explained from the very beginning. If you already have some experience, you’ll get through it faster and gain a deeper understanding.
+
+### How long is the course?
+
+The course is built around 5 days of structured content. How fast you move through it depends on how much time you can dedicate and how deeply you want to go. Most students finish in about a week, then keep returning to the modules as a reference while working on their own projects.
+
+### What languages is the course available in?
+
+Full voiceover in 5 languages (English, German, Spanish, Brazilian Portuguese, Russian) and subtitles in 9 languages (all voiceover languages plus Korean, Japanese, Chinese Simplified, French). Pick your language inside each lesson player, no extra setup.
+
+### Do I need experience in 3D or programming?
+
+No. The course is designed for beginners. Every step is explained from the very beginning. If you already have some experience, you’ll get through it faster and gain a deeper understanding.
+
+### How long is the course?
+
+The course is built around 5 days of structured content. How fast you move through it depends on how much time you can dedicate and how deeply you want to go. Most students finish in about a week, then keep returning to the modules as a reference while working on their own projects.
+
+### What languages is the course available in?
+
+Full voiceover in 5 languages (English, German, Spanish, Brazilian Portuguese, Russian) and subtitles in 9 languages (all voiceover languages plus Korean, Japanese, Chinese Simplified, French). Pick your language inside each lesson player, no extra setup.
+
+Our contacts:
