@@ -56,3 +56,7 @@ Reading order for the 2026-09-26 session: 2026-09-26-phyr-root-fire-ruling.md (r
 - **"Primordial Fear"** (variant of established **Primeval Fear**, one of the three pre-utterance states Omen / Primeval Fear / Cavitation) → 2026-09-26-radiant-thermal-register-vorujkai-cryophyr.md §3; both forms kept
 - **Radiant/thermal register** (light-code, whitest-fire, auric/infrared red, Cherenkov, biophotons, Bio-Photonic Flux) → 2026-09-26-radiant-thermal-register-vorujkai-cryophyr.md §1
 - **Descendant elements as force-bands?** (PROPOSED question, unanswered) → 2026-09-26-radiant-thermal-register-vorujkai-cryophyr.md §2
+- **Cross-branch & external sources** (what exists on the other four repo branches, and the ~4 GB ChatGPT/Claude export on David's own machine) → 2026-09-26-cross-branch-external-source-register.md
+- **GPT / Copilot rescued lore** → 2026-09-26-cross-branch-external-source-register.md §1 — **NONE exists in this container** (grep/find receipted); the GPT export is on David's machine, §2
+- **The forge ledger** (501,284 chars of armour-technique transcripts, ZBrush + Blender tracks) → 2026-09-26-cross-branch-external-source-register.md §3 — **CRAFT, not lore**; homes are the craft skills
+- **The kitbash muster** (2,163 models measured; existing 18-part HIGH/LOW armour set, 10-kit IMM library) → 2026-09-26-cross-branch-external-source-register.md §3 — **CRAFT, not lore**

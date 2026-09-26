@@ -150,6 +150,26 @@ Foundry · 276.png value law · sgl_io.py / 21 leaves · audition desk / Web Aud
 
 ---
 
+## GAP 8 — THE ~4 GB EXPORT ON DAVID'S OWN MACHINE (added 2026-09-26)
+
+**Found via `kitbash/tidy_downloads.ps1` on branch `claude/vibrant-knuth-e9ez4u`**, whose comment records
+a measurement from another session: **`chatgpt-files-part07.json` = 209 MB**, **`af-claude-binaries-part03`
+= 94 MB**, and **"65 such files carried ~4 GB."** They live on `C:\Users\DCEVO-D`, routed to
+`08 Docs & Ascent-Fall\Research archives`.
+
+This is the largest known unmined body of Ascent/Fall material, and the standing gaps above — **the six
+missing Magika Field sphere names, the Kūl'Rā'Qæl creation writing, the chat #3 canon-lock draft texts** —
+are all recorded as living in exactly such external documents. **Reachable by David, not from this
+container.** Full detail: `2026-09-26-cross-branch-external-source-register.md`.
+
+## GAP 9 — THREE OTHER BRANCHES THE KEEPER WAS BLIND TO (added 2026-09-26)
+
+`claude/blissful-allen-dfygyi` (the forge ledger: 501,284 chars of armour-technique transcripts, two
+tracks, an 8-page PDF), `claude/vibrant-knuth-e9ez4u` (the kitbash muster: 2,163 models measured, an
+existing 18-part HIGH/LOW armour set and 10-kit IMM library), `claude/github-installation-ndd4ke` (the
+iso asset constitution). **All craft, not lore** — recorded so they are no longer invisible, not composted
+as canon. Full detail in the same file.
+
 ## THE ONE-LINE SUMMARY
 
 What is on disk is now pooled, complete, and durable in git. **What is in your 31 chats, your unmounted
