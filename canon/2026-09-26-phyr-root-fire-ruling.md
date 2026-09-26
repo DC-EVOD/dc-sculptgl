@@ -68,6 +68,13 @@ Oro'Cy, now ruled a PHYR entity, is stated in his own passage as:
   consumer-law or to obey it by a longer clock.
 
 ## 6. THE ARCHIVIST'S READING
+
+> **NARROWED LATER THE SAME DAY — read `2026-09-26-radiant-thermal-register-vorujkai-cryophyr.md` §1 first.**
+> David refined the register: `PHYR` is the *symbolic / exalted* fire, *"not always the low burning
+> chemical event that is Fire"*, and *"often something that is another radiant or thermal force."*
+> The reading below anchors Oro'Cy against the Dja'Inn **chemical consumer-fire** law — that frame is
+> **over-anchored**. The breath observation stands on its own textual evidence; the Dja'Inn material is a
+> contrast of *registers*, not the primary frame. Kept here unedited per compost law.
 *Curatorial prose, clearly marked. A lamp over the strata, not a hand on the scale.*
 
 The strongest reading of this ruling is that it makes Oro'Cy **the counter-proof of the consumer law

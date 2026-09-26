@@ -23,6 +23,15 @@ This has **NOT** been done — it needs David's go-ahead:
    Execution & File Creation ON — path last known, verify it is still there). The mobile app cannot
    install skills. Packaging is not installing. Skills load at the start of a **fresh** chat.
 
+## Correction logged 2026-09-26
+
+An earlier statement in this session that the archive had **no `name-ledger.md`** was **wrong**. It was
+checked only under `ascent-fall-design-law/references/`. It exists at
+`ascent-fall-canon-keeper/references/name-ledger.md` and holds established entries — including
+**Vorujkai: "storm elemental; charge types / force carriers"** — which is load-bearing for the
+2026-09-26 Vorujkai ruling. Canon-keeper requires reading it before any dossier pull; it has now been
+read in full.
+
 ## Files
 
 - `2026-09-26-orocy-chthonokaen-sorrow-resonant.md` — the registration: entries labelled
