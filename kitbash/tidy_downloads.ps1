@@ -1,8 +1,9 @@
 #Requires -Version 5.1
 <#
-  DC DOWNLOADS TIDY  v1.0
+  DC DOWNLOADS TIDY  v1.1
   Files the loose files at the root of Downloads into David's existing numbered
   category folders. Category list was READ from his disk on 2026-09-26, not invented.
+  Routing rules corrected against a real dry run over 892 files the same day.
 
   SAFETY
     - DRY RUN BY DEFAULT. Writes a plan and moves nothing. -Execute performs moves.
@@ -68,57 +69,91 @@ $byExt = @{
   '.exe'='12 Installers'; '.msi'='12 Installers'
   '.unitypackage'='06 Unity'
 
+  # 16-bit raw heightmaps (World Machine / UE landscape). Found loose: 2 x 28 MB.
+  '.r16'='05 Procedural'; '.raw'='05 Procedural'
+  # SculptGL scene file - from David's own dc-sculptgl fork. Found loose: drohj.mask.sgl
+  '.sgl'='03 3D Models & Assets'
+
   '.ttf'=''; '.otf'=''; '.woff'=''; '.woff2'=''   # no font category exists - leave
 }
 $skipExt  = @('.crdownload','.part','.tmp')
 $modelExt = @('.obj','.fbx','.glb','.gltf','.ply','.stl')
 $imgExt   = @('.png','.jpg','.jpeg','.webp','.tga','.psd','.tif','.exr')
 $audExt   = @('.mp3','.wav','.m4a','.flac','.ogg')
-$brushExt = @('.zbp','.ztl','.kpp','.abr')
+$vidExt   = @('.mp4','.mov','.webm','.avi','.mkv','.gif')
+$zbExt    = @('.zbp','.ztl','.zpr')
+$kritaExt = @('.kpp','.bundle','.abr')
 
 # --- content sniffing --------------------------------------------------------
-function Get-JsonDest($path) {
-  # ComfyUI workflows are JSON with node graphs; plain config/data is not
+function Get-JsonDest($path, $name) {
+  # AI / chat EXPORT ARCHIVES are .json but they are archives, not code. Measured
+  # 2026-09-26: chatgpt-files-part07.json 209 MB, af-claude-binaries-part03 94 MB.
+  # 65 such files carried ~4 GB and were being filed as source code.
+  if ($name -match '(?i)^(chatgpt|chat-|claude|af-claude|conversations|openai)|-r?part\d+\.json$') {
+    return '08 Docs & Ascent-Fall\Research archives'
+  }
+  # ComfyUI workflows are node graphs. Read a fixed BYTE window, not N lines: a
+  # minified JSON is ONE line, so -TotalCount 80 read entire 200 MB files and was
+  # what made the first run appear to hang.
   try {
-    $head = Get-Content -LiteralPath $path -TotalCount 80 -ErrorAction Stop | Out-String
-    if ($head -match '"class_type"|"nodes"\s*:|"last_node_id"|ComfyUI') {
+    $fs = [System.IO.File]::OpenRead($path)
+    try {
+      $buf = New-Object byte[] 8192
+      $n = $fs.Read($buf, 0, $buf.Length)
+      $head = [System.Text.Encoding]::UTF8.GetString($buf, 0, $n)
+    } finally { $fs.Dispose() }
+    if ($head -match '"class_type"|"last_node_id"|ComfyUI|"nodes"\s*:') {
       return '03 3D Models & Assets\ComfyUI workflows'
     }
   } catch { }
   return '11 Code & Web Tools'
 }
 
-function Get-ZipDest($path) {
-  # route a zip by what is actually inside it
+function Get-ZipDest($path, $name) {
+  # NAME rules first, for packs whose contents do not identify them. Each of these
+  # was left unrouted by the contents-only version on 2026-09-26.
+  if ($name -match '(?i)receipt|proof|handoff')        { return '08 Docs & Ascent-Fall\Handoffs, Skills & Receipts' }
+  if ($name -match '(?i)pack[_ -]?manager|installer')  { return '12 Installers' }
+  if ($name -match '(?i)imm|zbrush|ztl|zbp')           { return '04 ZBrush' }
+  if ($name -match '(?i)brush')                        { return '02 Krita\Brushes' }
+
+  # then route by what is actually inside it
   try {
     Add-Type -AssemblyName System.IO.Compression.FileSystem -ErrorAction SilentlyContinue
     $zip = [System.IO.Compression.ZipFile]::OpenRead($path)
     try {
-      $c = @{ model=0; img=0; aud=0; brush=0; blend=0; unity=0 }
+      $c = @{ model=0; img=0; aud=0; vid=0; zb=0; krita=0; blend=0; unity=0 }
       foreach ($e in $zip.Entries) {
         $x = [System.IO.Path]::GetExtension($e.FullName).ToLower()
         if     ($modelExt -contains $x) { $c.model++ }
-        elseif ($brushExt -contains $x) { $c.brush++ }
+        elseif ($zbExt    -contains $x) { $c.zb++ }
+        elseif ($kritaExt -contains $x) { $c.krita++ }
         elseif ($imgExt   -contains $x) { $c.img++ }
         elseif ($audExt   -contains $x) { $c.aud++ }
+        elseif ($vidExt   -contains $x) { $c.vid++ }
         elseif ($x -eq '.blend')        { $c.blend++ }
         elseif ($x -eq '.unitypackage') { $c.unity++ }
       }
     } finally { $zip.Dispose() }
     # brushes and models win over loose images, since asset packs contain both
-    if ($c.brush -gt 0)                    { return '04 ZBrush' }
-    if ($c.blend -gt 0)                    { return '01 Blender\Blend files' }
-    if ($c.unity -gt 0)                    { return '06 Unity' }
-    if ($c.model -gt 0)                    { return '03 3D Models & Assets' }
-    if ($c.aud   -gt $c.img)               { return '07 Audio' }
-    if ($c.img   -gt 0)                    { return '09 Images' }
+    if ($c.zb    -gt 0)                        { return '04 ZBrush' }
+    if ($c.krita -gt 0)                        { return '02 Krita\Brushes' }
+    if ($c.blend -gt 0)                        { return '01 Blender\Blend files' }
+    if ($c.unity -gt 0)                        { return '06 Unity' }
+    if ($c.model -gt 0)                        { return '03 3D Models & Assets' }
+    if ($c.aud -gt $c.img -and $c.aud -gt $c.vid) { return '07 Audio' }
+    if ($c.vid   -gt $c.img)                   { return '10 Video' }
+    if ($c.img   -gt 0)                        { return '09 Images' }
   } catch { return '' }
+
+  # last resort name hints. A "turnaround" pack is renders of a model.
+  if ($name -match '(?i)turnaround|render|rodin') { return '03 3D Models & Assets' }
   return ''
 }
 
 # --- build the plan ---------------------------------------------------------
 New-Item -ItemType Directory -Force -Path $ReportDir | Out-Null
-Write-Host "`nDC DOWNLOADS TIDY v1.0" -ForegroundColor Cyan
+Write-Host "`nDC DOWNLOADS TIDY v1.1" -ForegroundColor Cyan
 Write-Host ("mode : {0}" -f $(if ($Execute) { 'EXECUTE - files will be MOVED' } else { 'DRY RUN - nothing will move' })) -ForegroundColor $(if ($Execute) { 'Yellow' } else { 'Green' })
 Write-Host "from : $Downloads  (root only, no recursion)"
 
@@ -127,13 +162,25 @@ $plan = New-Object System.Collections.ArrayList
 $files = @(Get-ChildItem -LiteralPath $Downloads -File -ErrorAction SilentlyContinue)
 Write-Host ("loose files at root : {0}" -f $files.Count)
 
+$i = 0
 foreach ($f in $files) {
+  $i++
+  if ($i % 50 -eq 0) { Write-Host ("    ...{0}/{1}" -f $i, $files.Count) -ForegroundColor DarkGray }
   $ext = $f.Extension.ToLower()
+  # a trailing-tilde backup routes as its real type: .png~ -> .png, .gif~ -> .gif
+  if ($ext -like '*~') { $ext = $ext.TrimEnd('~') }
   $dest = $null; $why = 'extension'
 
   if ($skipExt -contains $ext) { $dest = ''; $why = 'in-progress download' }
-  elseif ($ext -eq '.json')    { $dest = Get-JsonDest $f.FullName; $why = 'json content sniff' }
-  elseif ($ext -eq '.zip')     { $dest = Get-ZipDest  $f.FullName; $why = 'zip contents' }
+  elseif ($ext -eq '.json') {
+    # named, because reading these is the slow part - a stall is now attributable
+    Write-Host ("    json {0} ({1} MB)" -f $f.Name, [int]($f.Length/1MB)) -ForegroundColor DarkGray
+    $dest = Get-JsonDest $f.FullName $f.Name; $why = 'json name/content'
+  }
+  elseif ($ext -eq '.zip') {
+    Write-Host ("    zip  {0} ({1} MB)" -f $f.Name, [int]($f.Length/1MB)) -ForegroundColor DarkGray
+    $dest = Get-ZipDest $f.FullName $f.Name; $why = 'zip name/contents'
+  }
   elseif ($byExt.ContainsKey($ext)) { $dest = $byExt[$ext] }
   else { $dest = ''; $why = 'no rule for this extension' }
 
