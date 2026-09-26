@@ -1,8 +1,9 @@
 #Requires -Version 5.1
 <#
-  DC KITBASH MUSTER  v1.1
-  Scans your user folder for 3D assets, inventories them, then sorts them into
+  DC KITBASH MUSTER  v1.2
+  Scans for 3D assets, inventories them, then sorts them into
   %USERPROFILE%\DC-EVOD\{OBJ,FBX,GLB}\
+  Defaults to scanning Downloads only. Widen with -Roots.
 
   SAFETY
     - Default run is READ-ONLY: writes an inventory report and copies nothing.
@@ -11,6 +12,13 @@
       Unity/UE/git/VS project) / CACHE (AppData, Temp, Recycle Bin, engine caches).
       Only LOOSE is gathered unless you pass -IncludeProjects. CACHE never is.
     - COPIES by default. -Move moves instead, and refuses to move PROJECT files.
+    - -NeverGather folders (default: 'AUTOMATON BUILDS') are INVENTORIED but never
+      copied or moved out of. Curated kits live there; gathering from them would
+      dismantle the kit. Widen the list, don't narrow it.
+
+  KNOWN, NOT ADDRESSED: no reparse-point guard on traversal. %USERPROFILE% contains
+  self-referential junctions (AppData\Local\Application Data) that can inflate or
+  loop a recursive walk. Scoping to Downloads avoids them; a wide -Roots may not.
 
   USAGE
     .\muster.ps1                      # inventory only, writes no assets
@@ -23,11 +31,12 @@
 #>
 [CmdletBinding()]
 param(
-  [string[]] $Roots = @("$env:USERPROFILE"),
+  [string[]] $Roots = @((Join-Path $env:USERPROFILE 'Downloads')),
   [string]   $Out   = (Join-Path $env:USERPROFILE 'DC-EVOD'),
   [switch]   $Gather,
   [switch]   $Move,
   [switch]   $IncludeProjects,
+  [string[]] $NeverGather = @('AUTOMATON BUILDS'),
   [int]      $MinKB = 4,
   [int]      $MaxAssetCopyMB = 512
 )
@@ -197,7 +206,7 @@ $verb = if ($Move) { 'MOVING' } else { 'COPYING' }
 Write-Host "`n$verb into $Out\{OBJ,FBX,GLB}" -ForegroundColor Cyan
 foreach ($b in @('OBJ','FBX','GLB')) { New-Item -ItemType Directory -Force -Path (Join-Path $Out $b) | Out-Null }
 
-$done = 0; $skipped = 0; $moveRefused = 0
+$done = 0; $skipped = 0; $moveRefused = 0; $protectedSkip = 0
 $groups = $models | Where-Object { $zones -contains $_.Zone -and $_.SHA256 } | Group-Object SHA256
 foreach ($g in $groups) {
   $src  = $g.Group[0]
@@ -205,6 +214,14 @@ foreach ($g in $groups) {
   $safe = ($base -replace '[^\w\-. ]','_')
   $dest = Join-Path (Join-Path $Out $src.Bucket) ("{0}__{1}" -f $safe, $src.SHA256.Substring(0,8))
   if (Test-Path -LiteralPath $dest) { $skipped++; continue }
+
+  # curated kit folders are catalogued but NEVER gathered - moving or copying out
+  # of them would dismantle an organised kit
+  $isProtected = $false
+  foreach ($np in $NeverGather) {
+    if ($src.Folder -like "*$np*") { $isProtected = $true; break }
+  }
+  if ($isProtected) { $protectedSkip++; continue }
 
   # a move out of a live project can break that project's references - never do it
   $doMove = $Move
@@ -254,6 +271,7 @@ action                 : $(if($Move){'move (LOOSE only)'}else{'copy'})
 distinct models handled : $done
 already present         : $skipped
 move refused (PROJECT)  : $moveRefused
+protected, not gathered : $protectedSkip   ($($NeverGather -join ', '))
 zips holding models     : $($zipsWith.Count)   (NOT extracted)
 destination             : $Out
 "@
