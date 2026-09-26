@@ -60,3 +60,22 @@ Reading order for the 2026-09-26 session: 2026-09-26-phyr-root-fire-ruling.md (r
 - **GPT / Copilot rescued lore** → 2026-09-26-cross-branch-external-source-register.md §1 — **NONE exists in this container** (grep/find receipted); the GPT export is on David's machine, §2
 - **The forge ledger** (501,284 chars of armour-technique transcripts, ZBrush + Blender tracks) → 2026-09-26-cross-branch-external-source-register.md §3 — **CRAFT, not lore**; homes are the craft skills
 - **The kitbash muster** (2,163 models measured; existing 18-part HIGH/LOW armour set, 10-kit IMM library) → 2026-09-26-cross-branch-external-source-register.md §3 — **CRAFT, not lore**
+
+## Added 2026-09-26 (second pass) — the Drive dossiers, recovered
+
+- **THE DRIVE CANON DOSSIERS** (two `_for_Claude` handoff PDFs read in full from Google Drive) → 2026-09-26-drive-canon-dossiers-recovered.md — **SECONDARY SOURCE**, compiled by another assistant from David's project memory
+- **Oro Cy** (dossier form, no apostrophe; tied to Vorujkai + Cryophyrn via the Echidn'Otora) → 2026-09-26-drive-canon-dossiers-recovered.md §0.1 — **corrects my "new subject" claim**
+- **Cryophyrn** (≈ CryoPhyr) → 2026-09-26-drive-canon-dossiers-recovered.md §0.2
+- **Eclipsed Xeosai** = Vorujkai's title · **Xeosai** = the To'Temok spirit-warrior sect · **Xoru-Ia'Tek** = the true ethnocultural name → 2026-09-26-drive-canon-dossiers-recovered.md §0.2, §4
+- **SPECTRAL MAPPING** (Drohj=UV · Vorujkai=IR/thermal · Zerathi=indigo/pink · Nomig=earth resonance) → 2026-09-26-drive-canon-dossiers-recovered.md §0.3 — **answers the Descendants-as-spectrum question**
+- **Sworn count: nine / twelve / Ten Masked Aeons / three** — four layers, none locked → 2026-09-26-drive-canon-dossiers-recovered.md §1
+- **Four archetypes of the native astral race**: Kny'Ŋth=knight · **Njj'a (NEga)=ninja** · Hexån=witch · Dja'Ānn=Maegi → 2026-09-26-drive-canon-dossiers-recovered.md §1
+- **Drohj**: Phoqyron origin (dimension imploded into an alchemical black hole via starseed catalyst), the inverse-angel symmetry, **the Ode as his original antiphonic song**, **the Star Animal / Animal Without Ancestors**, pylon-song, the Inner Void Temple → 2026-09-26-drive-canon-dossiers-recovered.md §2
+- **Nomig**: TRR'UNDARU, the four blades' waveform identities, the twelve Trrkin processes, Nr'Qomorphite/Black Ophyonite, Chosen of Nr'Og, crystalis-memnon, 88 earthkin, Velthi'Faa → 2026-09-26-drive-canon-dossiers-recovered.md §3
+- **Vorujkai**: all nine titles, the Sky Tree, XEOS, Exelenexen, the Cross-Phased Lands, the Xeosai throwing glaive → 2026-09-26-drive-canon-dossiers-recovered.md §4
+- **Echidn'Otora** (torpor underworld animals; **phyr ants**) → 2026-09-26-drive-canon-dossiers-recovered.md §5
+- **Sphera Phonoton NOW DEFINED** · Solar Nexus chakra · **totemism defined** · Mythic Compression · Arc Primals as living songlines · Dreamless Sleep defined → 2026-09-26-drive-canon-dossiers-recovered.md §6
+- **NEW FIGURES**: Xogorrtrm · Inceraadus Mortium · Omniscientists · Phyton · Dvaa'Qyru · Zerathi · Aajk'Ae'El · Ae'El-Cytonata · Kobras · Djenak · Qurok · Xy'to · Xrrtl · Derwyd/Dweneton · ZSI · **Sonok** → 2026-09-26-drive-canon-dossiers-recovered.md §7
+- **PLACES**: Pariah Crag · **O'Brū-Ŋūdha'Wrr** (with pronunciation) · Nal'Avi-Xul'Ta · fae biology & mythic compulsion · the blue moonlight passage → 2026-09-26-drive-canon-dossiers-recovered.md §8
+- **BOOKS**: Book 3 = **Origin of Psyche**; earlier frame **Origin of Extinction** → 2026-09-26-drive-canon-dossiers-recovered.md §9
+- **PRODUCTION SPECS**: 35.246°, 3840² sheets, Krita/ZBrush/DAZ/Unity/World Machine (**"Blender is not preferred"**), **the four-value blockout workflow** → 2026-09-26-drive-canon-dossiers-recovered.md §10

@@ -17,6 +17,12 @@
 
 ## 1. ORO'CY — NEW SUBJECT to the mounted archive
 
+> **CORRECTED LATER THE SAME DAY.** Oro'Cy is **NOT new to David's canon.** The Google Drive dossier
+> `Ascent_Fall_Vaehr_Expanded_Canon_Dossier_for_Claude.pdf` names **`Oro Cy`** (no apostrophe), grouped
+> with **Vorujkai** and **Cryophyrn** via the **Echidn'Otora**. The grep-verified absence from the
+> *mounted skills* was real; calling him a new subject was my inference from it, and it was too strong.
+> See `2026-09-26-drive-canon-dossiers-recovered.md` §0.1.
+
 Verified absent before filing: `grep -rin "Oro'Cy\|Oro-Cy\|Chthonos\|Chthonokaen\|Phyronic\|sorrow-resonant"`
 across the whole mounted skill set returned **zero hits**.
 

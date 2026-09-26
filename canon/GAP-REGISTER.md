@@ -170,6 +170,26 @@ existing 18-part HIGH/LOW armour set and 10-kit IMM library), `claude/github-ins
 iso asset constitution). **All craft, not lore** — recorded so they are no longer invisible, not composted
 as canon. Full detail in the same file.
 
+## GAP 10 — GOOGLE DRIVE: PARTIALLY MINED 2026-09-26 (was never checked before)
+
+**Drive was reachable all along and had never been searched.** The 2026-09-25 session
+"Ascent/Fall lore extraction round 2" flagged it — *"Drive files not yet read"* — and stopped there.
+
+**READ IN FULL this session:**
+- `Ascent_Fall_Vaehr_Canon_Handoff_for_Claude.pdf` (215 KB) — complete
+- `Ascent_Fall_Vaehr_Expanded_Canon_Dossier_for_Claude.pdf` (292 KB / 56,164 chars) — complete
+Both registered in `2026-09-26-drive-canon-dossiers-recovered.md`.
+
+**STILL UNREAD IN DRIVE — the next actions:**
+- **`Drohj_Star_Animal_Arc_Primal_Dossier.pdf` — 6,444,004 bytes.** The single largest lore PDF found.
+  The Star Animal / Arc Primal material is central and the two dossiers only summarise it.
+- **`ASCENT FALL- ORIGIN OF ELEMENTS.scriv`** — the **Scrivener project. The book itself.** A folder, so it
+  needs its children listed and read individually.
+- `DROHJ_BUILD_GUIDE.pdf` · `drohj-spell-forge-v1.html` · `DROHJ_ASSET_PIPELINE_MANUAL.zip` ·
+  `Ascent_Fall_Scale_Reference_Kit.zip` · the `ASCENT-FALL-GAME`, `DROHJ MASTER` and `ascent fall`
+  folders — not enumerated.
+- The Drive search returned a `nextPageToken`: **the listing was not exhausted.**
+
 ## THE ONE-LINE SUMMARY
 
 What is on disk is now pooled, complete, and durable in git. **What is in your 31 chats, your unmounted
